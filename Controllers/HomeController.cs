@@ -12,18 +12,14 @@ namespace MySoccerWorld.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly SoccerContext db;
+        public HomeController(ILogger<HomeController> logger, SoccerContext context)
         {
             _logger = logger;
+            db = context;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
