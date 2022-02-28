@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "woHrar8hHcBZyAyLYKnQ6H2pzryP1cBJx4G5x1jVGSWqPJQKODaEZRM2d6r3mNNDaUPNufTRzMyWx+pPds6pDg==",
+  "dgSpecHash": "zXakUQz952Rl5knhRFp5ZVwpEDh1KghtdjIXGNEPgt7S5x4mcoE8EFUhhPT2DmEZT3D8E9+ZpG0sXNkWf1TLFg==",
   "success": true,
   "projectFilePath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
   "expectedPackageFiles": [
@@ -50,9 +50,11 @@
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\5.0.2\\microsoft.visualstudio.web.codegeneration.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.contracts\\5.0.2\\microsoft.visualstudio.web.codegeneration.contracts.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\5.0.2\\microsoft.visualstudio.web.codegeneration.core.5.0.2.nupkg.sha512",
+    "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\5.0.2\\microsoft.visualstudio.web.codegeneration.design.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.entityframeworkcore\\5.0.2\\microsoft.visualstudio.web.codegeneration.entityframeworkcore.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\5.0.2\\microsoft.visualstudio.web.codegeneration.templating.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\5.0.2\\microsoft.visualstudio.web.codegeneration.utils.5.0.2.nupkg.sha512",
+    "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\5.0.2\\microsoft.visualstudio.web.codegenerators.mvc.5.0.2.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",

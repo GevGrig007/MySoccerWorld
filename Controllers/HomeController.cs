@@ -18,12 +18,10 @@ namespace MySoccerWorld.Controllers
             _logger = logger;
             db = context;
         }
-
         public IActionResult Index()
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

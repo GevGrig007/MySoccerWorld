@@ -144,3 +144,12 @@ C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\MySocce
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\ref\MySoccerWorld.dll
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\MySoccerWorld.pdb
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\MySoccerWorld.genruntimeconfig.cache
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\bin\Debug\net5.0\dotnet-aspnet-codegenerator-design.dll
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\bin\Debug\net5.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\Index.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shared\MenuHeader.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Leagues\Index.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Leagues\Edit.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Leagues\Delete.cshtml.g.cs

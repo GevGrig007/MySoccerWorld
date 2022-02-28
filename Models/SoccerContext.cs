@@ -29,7 +29,7 @@ namespace MySoccerWorld.Models
         public DbSet<SeasonalAward> SeasonalAwards { get; set; }
         public SoccerContext(DbContextOptions<SoccerContext> options) : base(options)
         {
-            
+            //Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
