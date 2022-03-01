@@ -33,8 +33,15 @@ using MySoccerWorld.Models.Entities;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0d42d4ba0eed1db0d7225f31bf9d8543dae90305", @"/Views/Leagues/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d2d21557da65b5da443f1af3067ef241d6bd73bb", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7a0da511b9e53acb590697c32bbf2ab9b9816f8", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Leagues_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<League>>
     #nullable disable
@@ -85,9 +92,9 @@ using MySoccerWorld.Models.Entities;
 #line hidden
 #nullable disable
             WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae903057240", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae903057435", async() => {
                 WriteLiteral("\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d42d4ba0eed1db0d7225f31bf9d8543dae903057620", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d42d4ba0eed1db0d7225f31bf9d8543dae903057815", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -102,7 +109,7 @@ using MySoccerWorld.Models.Entities;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d42d4ba0eed1db0d7225f31bf9d8543dae903058798", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0d42d4ba0eed1db0d7225f31bf9d8543dae903058993", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -129,7 +136,7 @@ using MySoccerWorld.Models.Entities;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030510680", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030510875", async() => {
                 WriteLiteral("\r\n    <div>\r\n        ");
 #nullable restore
 #line 15 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\Leagues\Index.cshtml"
@@ -182,7 +189,7 @@ using MySoccerWorld.Models.Entities;
 #line hidden
 #nullable disable
                 WriteLiteral("        </div>\r\n        <div class=\"col-6\" id=\"fon\">\r\n            <div class=\"p-5\">\r\n                <p id=\"name\">\r\n                    Create New League\r\n                </p>\r\n                <div>\r\n                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030513368", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030513563", async() => {
                     WriteLiteral(@"
                         <input type=""text"" name=""Name"" placeholder=""Create a Name of League"" />
                         <input type=""text"" name=""Region"" placeholder=""Add a Region for League"" />
@@ -210,7 +217,7 @@ using MySoccerWorld.Models.Entities;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                </div>\r\n            </div>\r\n            <div class=\"p-5\">\r\n                <p id=\"name\">\r\n                    Create New Season\r\n                </p>\r\n                <div>\r\n                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030515874", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030516069", async() => {
                     WriteLiteral("\r\n                        <input type=\"text\" inputmode=\"numeric\" name=\"dataseason\" />\r\n                        <button class=\"btn-primary\" type=\"submit\">\r\n                            CREATE SEASON\r\n                        </button>\r\n                    ");
                 }
                 );
@@ -231,7 +238,7 @@ using MySoccerWorld.Models.Entities;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div id=\"modDialog\" class=\"modal fade\" style=\"top:10%\">\r\n        <div id=\"dialogContent\" class=\"modal-dialog\"></div>\r\n    </div>\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030518176", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030518371", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -245,7 +252,7 @@ using MySoccerWorld.Models.Entities;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030519276", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d42d4ba0eed1db0d7225f31bf9d8543dae9030519471", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

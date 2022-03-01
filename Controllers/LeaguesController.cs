@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MySoccerWorld.Models;
 using MySoccerWorld.Models.Entities;
+using MySoccerWorld.Models.Services;
+using MySoccerWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +68,28 @@ namespace MySoccerWorld.Controllers
             db.Seasons.Add(season);
             db.SaveChanges();
             return View();
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var league = await db.Leagues.Include(l => l.Tournaments).ThenInclude(c => c.Season)
+                                         .Include(l => l.Tournaments).ThenInclude(t => t.Ratings)
+                                         .FirstOrDefaultAsync(l => l.Id == id);
+            var tournaments = db.Tournaments.Include(t => t.Ratings).Where(t => t.LeagueId == id).ToList();
+            var goalscorers = db.PlayerTeams.Include(p => p.Team).Include(p => p.Player).Include(p => p.Goals.Where(g => g.Match.Tournament.LeagueId == id));
+            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.Tournament.LeagueId == id));
+            var macthes = db.Matches.Where(m => m.Tournament.LeagueId == id).Include(m => m.Home).Include(m => m.Away).ToList();
+            var leagueStat = new LeagueStats(league, macthes);
+            var leagueView = new LeagueViewModel()
+            {
+                League = league,
+                Tournaments = tournaments,
+                Goals = goalscorers,
+                Asists = asisters,
+                Ratings = db.Ratings.Include(r => r.Team).Where(r => r.Tournament.LeagueId == id).Where(r => r.Tournament.Division == "1").ToList(),
+                Matches = macthes,
+                Stats = leagueStat
+            };
+            return View(leagueView);
         }
     }
 }

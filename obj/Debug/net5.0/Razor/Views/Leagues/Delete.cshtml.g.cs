@@ -33,8 +33,15 @@ using MySoccerWorld.Models.Entities;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f3c6986231beec279ea56ccdbea81455094850cf", @"/Views/Leagues/Delete.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d2d21557da65b5da443f1af3067ef241d6bd73bb", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7a0da511b9e53acb590697c32bbf2ab9b9816f8", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Leagues_Delete : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<League>
     #nullable disable
@@ -76,7 +83,7 @@ using MySoccerWorld.Models.Entities;
 #line hidden
 #nullable disable
             WriteLiteral("<div class=\"modal-content\">\r\n    <div class=\"modal-header\">\r\n        <button class=\"close\" data-dismiss=\"modal\" area-hidden=\"true\">X</button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3c6986231beec279ea56ccdbea81455094850cf4826", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3c6986231beec279ea56ccdbea81455094850cf5021", async() => {
                 WriteLiteral("\r\n            <div class=\"mb-4\">\r\n                Are you sure want delete <br /> <span style=\"color:darkred; font-size:20px;\">\"");
 #nullable restore
 #line 12 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\Leagues\Delete.cshtml"
