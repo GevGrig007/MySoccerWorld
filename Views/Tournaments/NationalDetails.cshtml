@@ -1,0 +1,99 @@
+﻿@model EuroCupViewModel
+@{
+    Layout = "_TournamentLayout";
+    ViewData["Title"] = Model.Tournament.Name + "" + "Details";
+}
+<h1 class="justify-content-center d-flex"
+    style="color: blanchedalmond; background-color: brown; padding: 15px; margin-bottom: 50px; border: solid 3px; border-color: indigo; font-family: Impact;">
+    @Model.Tournament.Name - @Model.Tournament.Season.Data
+</h1>
+<div>
+    @{
+        if (Model.Tournament.Matches.Count > 0)
+        {
+            <div>
+                <div>
+                    @foreach (var g in Model.Groups)
+                    {
+                        <div class="col-12 justify-content-center text-center" style="background-color:darkcyan; color:white; padding:10px">
+                            @g.Name
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                @await Html.PartialAsync("Standing", g.GroupStandings)
+                            </div>
+                            <div class="col-6">
+                                @foreach (var m in g.Matches)
+                                {
+                                    <div class="container">
+                                        @await Html.PartialAsync("Match", m)
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div>
+                    <div>
+                        @await Html.PartialAsync("KnockOut", Model.Matches)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col-6" style="border: solid; border-color: coral; margin-top: 25px;">
+                        <div style="font-size: x-large;
+                                  background-color: navy;
+                                  color: darkorange;
+                                  font-family: cursive;
+                                  justify-content: center;
+                                  border-bottom: solid;
+                                  display: flex;">
+                            GOALSCORERS
+                        </div>
+                        @foreach (var c in Model.Goals.Where(g => g.Goals.Count > 2).OrderByDescending(g => g.Goals.Count))
+                        {
+                            <div class="row m-0" style="border-bottom:1px solid">
+                                <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                    @c.Player.Name
+                                </div>
+                                <div class="col-5" style="font-size:13px;">@c.Team.Name</div>
+                                <div class="col-1" style="background-color:brown;color:ivory">@c.Goals.Count()</div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-6" style="border: solid; border-color: coral; margin-top:25px;">
+                        <div style="font-size: x-large;
+                                  background-color: navy;
+                                  color: darkorange;
+                                  font-family: cursive;
+                                  justify-content: center;
+                                  border-bottom: solid;
+                                  display: flex;">
+                            ASSISTANTS
+                        </div>
+                        @foreach (var c in Model.Asists.Where(a => a.Asists.Count > 1).OrderByDescending(g => g.Asists.Count))
+                        {
+                            <div class="row m-0" style="border-bottom:1px solid">
+                                <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                    @c.Player.Name
+                                </div>
+                                <div class="col-5" style="font-size:13px;">@c.Team.Name</div>
+                                <div class="col-1" style="background-color:brown;color:ivory">@c.Asists.Count()</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {<p>"Please create a shedulle for tournament"</p>;
+        }
+    }
+</div>
+<div>
+    @if (Model.BestPlayer.Count() > 0)
+    {
+        @await Html.PartialAsync("BestPlayer", Model.Tournament)
+    }
+</div>

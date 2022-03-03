@@ -1,0 +1,84 @@
+﻿@model Tournament
+<div>
+    <form asp-action="EditBP" asp-controller="Tournaments" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <select name="bp" asp-items="Html.GetEnumSelectList<BPSchema>()">
+            <option selected="selected" disabled="disabled"> @Model.BestPlayerSchema </option>
+        </select>
+        <input type="submit" value="apply" />
+    </form>
+</div>
+<style>
+    .bestplayer {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        border: solid;
+        border-color: darkolivegreen;
+        background-color: #90ee9094;
+    }
+
+    .bpclub {
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        color: darkviolet;
+        text-transform: uppercase;
+        font-weight: bolder;
+    }
+
+    .bprow {
+        justify-content: space-around;
+    }
+
+    p {
+        margin: 0;
+    }
+</style>
+@{
+    if (Model.BestPlayerSchema == BPSchema.F_31213)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31213.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_31222)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31222.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_31321)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31321.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_3223)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3223.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_3232)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3232.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_3313)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3313.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_3322)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3322.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_3331)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3331.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_442)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer442.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerSchema == BPSchema.F_32131)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer32131.cshtml", Model.BestPlayers)
+    }
+    else
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3133.cshtml", Model.BestPlayers)
+    }
+
+}

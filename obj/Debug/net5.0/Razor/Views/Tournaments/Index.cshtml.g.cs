@@ -40,8 +40,15 @@ using MySoccerWorld.ViewModels;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.Models.Services;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c7fc0a6ddf3b5790912ec1154900dcb275eef767", @"/Views/Tournaments/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7a0da511b9e53acb590697c32bbf2ab9b9816f8", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27b41d72e309e687d740d9d0d2ac34708a534e9b", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Tournaments_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<League>>
     #nullable disable
@@ -95,9 +102,9 @@ using MySoccerWorld.ViewModels;
 #line hidden
 #nullable disable
             WriteLiteral("<!DOCTYPE html>\r\n<html>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef7678585", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef7678785", async() => {
                 WriteLiteral("\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "c7fc0a6ddf3b5790912ec1154900dcb275eef7678965", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "c7fc0a6ddf3b5790912ec1154900dcb275eef7679165", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -124,7 +131,7 @@ using MySoccerWorld.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76710847", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76711047", async() => {
                 WriteLiteral(@"
     <div class=""row"" style=""margin-right:0;"">
         <div class=""col-3"">
@@ -136,7 +143,7 @@ using MySoccerWorld.ViewModels;
                 <ul class=""nav nav-pills flex-column mb-auto"">
                     <li class=""nav-item"">
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76711707", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76711907", async() => {
                     WriteLiteral("\r\n                            All\r\n                        ");
                 }
                 );
@@ -156,7 +163,7 @@ using MySoccerWorld.ViewModels;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                    </li>\r\n                    <li>\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76713453", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76713653", async() => {
                     WriteLiteral("\r\n                            Regional\r\n                        ");
                 }
                 );
@@ -175,7 +182,7 @@ using MySoccerWorld.ViewModels;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                    </li>\r\n                    <li>\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76715117", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76715317", async() => {
                     WriteLiteral("\r\n                            Euro Cups\r\n                        ");
                 }
                 );
@@ -194,7 +201,7 @@ using MySoccerWorld.ViewModels;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                    </li>\r\n                    <li>\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76716782", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76716982", async() => {
                     WriteLiteral("\r\n                            National\r\n                        ");
                 }
                 );
@@ -213,7 +220,7 @@ using MySoccerWorld.ViewModels;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                    </li>\r\n                    <li>\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76718446", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7fc0a6ddf3b5790912ec1154900dcb275eef76718646", async() => {
                     WriteLiteral("\r\n                            Manage Leagues\r\n                        ");
                 }
                 );

@@ -1,0 +1,25 @@
+﻿@model Tournament
+@{
+    Layout = "_TournamentLayout";
+    ViewData["Title"] = Model.Name + "Details";
+}
+<h1 class="justify-content-center d-flex"
+    style="color: blanchedalmond; background-color: brown; padding: 15px; margin-bottom: 50px; border: solid 3px; border-color: indigo; font-family: Impact;">
+    @Model.Name - @Model.Season.Data
+</h1>
+<div>
+    @foreach (var m in Model.Matches.GroupBy(m => m.Round))
+    {
+        <div>
+            <div class="row justify-content-center bg-success text-white p-2" style="border: solid 2px #3c14b9;font-size: 22px;font-weight: 700;">
+                @m.Key
+            </div>
+            @foreach (var c in m)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", c)
+                </div>
+            }
+        </div>
+    }
+</div>

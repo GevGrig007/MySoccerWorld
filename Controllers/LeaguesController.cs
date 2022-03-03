@@ -78,7 +78,6 @@ namespace MySoccerWorld.Controllers
             var goalscorers = db.PlayerTeams.Include(p => p.Team).Include(p => p.Player).Include(p => p.Goals.Where(g => g.Match.Tournament.LeagueId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.Tournament.LeagueId == id));
             var macthes = db.Matches.Where(m => m.Tournament.LeagueId == id).Include(m => m.Home).Include(m => m.Away).ToList();
-            var leagueStat = new LeagueStats(league, macthes);
             var leagueView = new LeagueViewModel()
             {
                 League = league,
@@ -86,9 +85,9 @@ namespace MySoccerWorld.Controllers
                 Goals = goalscorers,
                 Asists = asisters,
                 Ratings = db.Ratings.Include(r => r.Team).Where(r => r.Tournament.LeagueId == id).Where(r => r.Tournament.Division == "1").ToList(),
-                Matches = macthes,
-                Stats = leagueStat
+                Matches = macthes
             };
+            if (macthes.Count > 0) { var leagueStat = new LeagueStats(league, macthes); leagueView.Stats = leagueStat; }
             return View(leagueView);
         }
     }

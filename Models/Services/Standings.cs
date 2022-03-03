@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MySoccerWorld.Models.Services
 {
-    public class Standing
+    public class Standings
     {
         public static readonly int PointsForWin = 3;
         public static readonly int PointsForDraw = 1;
@@ -35,7 +35,6 @@ namespace MySoccerWorld.Models.Services
                     AwayGames.Sum(fixture => fixture.HomeScore);
                 var GoalDifference = GoalsFor - GoalsAgainst;
                 var Points = (Win * PointsForWin) + (Draw * PointsForDraw) + (Lost * PointsForLoss);
-                var club = (Club)team;
                 var tournamentTable = new TournamentTable
                 {
                     TeamName = team.Name,
@@ -48,8 +47,7 @@ namespace MySoccerWorld.Models.Services
                     GoalsAgainst = GoalsAgainst,
                     GoalDifference = GoalDifference,
                     Points = Points,
-                    Flag = team.Flag,
-                    Country = club.Country
+                    Flag = team.Flag
                 };
                 table.Add(tournamentTable);
 

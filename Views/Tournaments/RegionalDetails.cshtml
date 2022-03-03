@@ -1,0 +1,84 @@
+﻿@model TournamentViewModel
+@{
+    Layout = "_TournamentLayout";
+    ViewData["Title"] = Model.Tournament.Name + "Info";
+}
+<h1 class="justify-content-center d-flex"
+    style="color: blanchedalmond; background-color: brown; padding: 15px; margin-bottom: 50px; border: solid 3px; border-color: indigo; font-family: Impact;">
+    @Model.Tournament.Name - @Model.Tournament.Season.Data
+</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-7">
+            @await Html.PartialAsync("Standing", Model.TournamentStandings)
+        </div>
+        <div class="col-5">
+            <div class="justify-content-center">
+                <div style="border: solid; border-color: coral;">
+                    <div class="" style="font-size: x-large;
+                                  background-color: navy;
+                                  color: darkorange;
+                                  font-family: cursive;
+                                  justify-content: center;
+                                  border-bottom: solid;
+                                  display: flex;">
+                        GOALSCORERS
+                    </div>
+                    @foreach (var c in Model.Goals.Where(g => g.Goals.Count > 2).OrderByDescending(g => g.Goals.Count).Take(15))
+                    {
+                        <div class="row m-0" style="border-bottom:1px solid">
+                            <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                @c.Player.Name
+                            </div>
+                            <div class="col-5" style="font-size:13px;">@c.Team.Name</div>
+                            <div class="col-1" style="background-color:brown;color:ivory">@c.Goals.Count()</div>
+                        </div>
+                    }
+                </div>
+                <div style="border: solid; border-color: coral; margin-top:25px;">
+                    <div class="" style="font-size: x-large;
+                                  background-color: navy;
+                                  color: darkorange;
+                                  font-family: cursive;
+                                  justify-content: center;
+                                  border-bottom: solid;
+                                  display: flex;">
+                        ASSISTANTS
+                    </div>
+                    @foreach (var c in Model.Asists.Where(a => a.Asists.Count > 1).OrderByDescending(g => g.Asists.Count).Take(15))
+                    {
+                        <div class="row m-0" style="border-bottom:1px solid">
+                            <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                @c.Player.Name
+                            </div>
+                            <div class="col-5" style="font-size:13px;">@c.Team.Name</div>
+                            <div class="col-1" style="background-color:brown;color:ivory">@c.Asists.Count()</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        @foreach (var m in Model.Matches.OrderBy(c => c.Round).GroupBy(c => c.Round))
+        {
+            <div>
+                <div class="row justify-content-center bg-success text-white p-2" style="border: solid 2px #3c14b9;font-size: 22px;font-weight: 700;">
+                    @m.Key ROUND
+                </div>
+                @foreach (var c in m)
+                {
+                    <div class="container">
+                        @await Html.PartialAsync("Match", c)
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @if (Model.BestPlayer.Count() > 0)
+    {
+        @await Html.PartialAsync("BestPlayer", Model.Tournament)
+    }
+</div>

@@ -59,11 +59,11 @@
         </div>
     </div>
     <div class="col-9">
-        <div class="container">
+        <div >
             @await Html.PartialAsync("MenuHeader") 
         </div>
         <div>
-            @if (Model.Tournaments != null)
+            @if (Model.Tournaments.Count >0)
             {
                 <div class="d-flex justify-content-center">
                     <div>
@@ -188,7 +188,9 @@
                     </div>
                 </div>
             }
-            else { <p> Please go to MANAGE TOURNAMETS  for create a new tournament   </p> }
+            else { <p class="linkforcreate"> Please go to -
+            <a asp-action="TournamentManage" asp-controller="Tournaments" asp-route-id="@Model.League.Id"> MANAGE TOURNAMETS  </a> 
+            - for create a new tournament   </p> }
         </div>
     </div>
 </div>

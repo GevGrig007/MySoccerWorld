@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Match>
+<div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/64 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/64   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/64 finals"))
+        {
+
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/32 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/32   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/32 finals"))
+        {
+
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/16 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/16   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/16 finals"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("MatchGreen", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/8 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/8   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/8 finals"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/4 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/4   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/4 finals"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "1/2 finals"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                1/2   FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "1/2 finals"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "Bronze-Match"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                BRONZE-MATCH
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "Bronze-Match"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
+        @if (Model.Any(m => m.Round == "Final"))
+        {
+            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+                FINAL
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round == "Final"))
+        {
+            if (m != null)
+            {
+                <div class="container">
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+</div>

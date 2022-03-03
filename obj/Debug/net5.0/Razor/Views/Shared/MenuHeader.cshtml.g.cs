@@ -40,8 +40,15 @@ using MySoccerWorld.ViewModels;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.Models.Services;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1594f42bffebae0829f64fb62a6abfc9aac4ca86", @"/Views/Shared/MenuHeader.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f7a0da511b9e53acb590697c32bbf2ab9b9816f8", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27b41d72e309e687d740d9d0d2ac34708a534e9b", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Shared_MenuHeader : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable
@@ -86,7 +93,7 @@ using MySoccerWorld.ViewModels;
 #line hidden
 #nullable disable
             WriteLiteral("<div class=\"container\">\r\n    <header class=\"d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom\">\r\n        <ul class=\"nav nav-pills\">\r\n            <li class=\"nav-item\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca866107", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca866307", async() => {
                 WriteLiteral("Home");
             }
             );
@@ -105,7 +112,7 @@ using MySoccerWorld.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n            <li class=\"nav-item\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca867589", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca867789", async() => {
                 WriteLiteral("Tournaments");
             }
             );
@@ -124,7 +131,7 @@ using MySoccerWorld.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n            <li class=\"nav-item\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca869078", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca869278", async() => {
                 WriteLiteral("Clubs");
             }
             );
@@ -143,7 +150,7 @@ using MySoccerWorld.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n            <li class=\"nav-item\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca8610561", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca8610761", async() => {
                 WriteLiteral("Players");
             }
             );
@@ -162,7 +169,7 @@ using MySoccerWorld.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n            <li class=\"nav-item\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca8612047", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1594f42bffebae0829f64fb62a6abfc9aac4ca8612247", async() => {
                 WriteLiteral("Ratings");
             }
             );
