@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Match>
 <div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/64 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/64   FINAL
             </div>
         }
@@ -12,16 +12,16 @@
 
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/32 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/32   FINAL
             </div>
         }
@@ -30,16 +30,16 @@
 
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/16 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/16   FINAL
             </div>
         }
@@ -47,16 +47,16 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("MatchGreen", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/8 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/8   FINAL
             </div>
         }
@@ -64,16 +64,16 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/4 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/4   FINAL
             </div>
         }
@@ -81,16 +81,16 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "1/2 finals"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 1/2   FINAL
             </div>
         }
@@ -98,16 +98,16 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "Bronze-Match"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 BRONZE-MATCH
             </div>
         }
@@ -115,16 +115,16 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }
         }
     </div>
-    <div>
+    <div class="roundrow">
         @if (Model.Any(m => m.Round == "Final"))
         {
-            <div class="round" style="background-color:darkcyan; text-align:center; font-size:24px; color:white">
+            <div class="round">
                 FINAL
             </div>
         }
@@ -132,7 +132,7 @@
         {
             if (m != null)
             {
-                <div class="container">
+                <div>
                     @await Html.PartialAsync("Match", m)
                 </div>
             }

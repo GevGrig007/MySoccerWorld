@@ -181,3 +181,4 @@ C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\V
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\Delete.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\Matches.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Matches\Edit.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Matches\Delete.cshtml.g.cs

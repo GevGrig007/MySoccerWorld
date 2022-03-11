@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<TournamentTable>
+    
 <div>
-    <style>
-        .table td {
-            vertical-align: unset;
-        }
-    </style>
     @{
         var standings = Model.Select((p, i) => new { Index = i + 1, standing = p });
-        <table class="table" style="border:solid;">
-            <thead style="background-color:blue; border:solid;">
+        <table class="table">
+            <thead >
                 <tr>
                     <td> #    </td>
                     <td> Club </td>
@@ -21,7 +17,7 @@
                     <td> P    </td>
                 </tr>
             </thead>
-            <tbody style="background-color:azure">
+            <tbody >
                 @foreach (var c in standings)
                 {
                     <tr>
@@ -41,8 +37,8 @@
                         {
                             <td> @c.Index </td>
                         }
-                        <td style="border-left:solid 1px;border-right:solid 1px;">
-                            <img src="@c.standing.Flag" width="42" height="48" />
+                        <td id="club" >
+                            <img src="@c.standing.Flag" />
                             @c.standing.TeamName
                         </td>
                         <td> @c.standing.Played  </td>
@@ -51,7 +47,7 @@
                         <td> @c.standing.Lost </td>
                         <td> @c.standing.GoalsFor-@c.standing.GoalsAgainst </td>
                         <td> @c.standing.GoalDifference </td>
-                        <td style="border-left:solid 1px;"> @c.standing.Points </td>
+                        <td id="points"> @c.standing.Points </td>
                     </tr>
                 }
             </tbody>
