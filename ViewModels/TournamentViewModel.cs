@@ -14,7 +14,7 @@ namespace MySoccerWorld.ViewModels
         public List<Match> Matches { get; set; }
         public IEnumerable<PlayerTeam> Goals { get; set; }
         public IEnumerable<PlayerTeam> Asists { get; set; }
-        public IEnumerable<BestPlayer> BestPlayer { get; set; }
+        public List<BestPlayer> BestPlayer { get; set; }
         public IEnumerable<TournamentTable> TournamentStandings { get; set; }
     }
 }

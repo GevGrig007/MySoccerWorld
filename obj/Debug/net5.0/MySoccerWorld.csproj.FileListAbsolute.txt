@@ -182,3 +182,15 @@ C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\V
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\Matches.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Matches\Edit.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Matches\Delete.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shared\_General.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\Index.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\AddTeams.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\ShedulleCC.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\ShedulleEuroCup.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\ShedulleEuroNational.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\ShedulleNational8.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\_ShedulleGroup.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\_ShedulleKnockOut.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Shedulles\_ShedulleNationalKnockOut.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\BestPlayers\Create.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\BestPlayers\Edit.cshtml.g.cs

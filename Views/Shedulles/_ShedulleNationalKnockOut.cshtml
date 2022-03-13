@@ -1,0 +1,46 @@
+﻿@model Tournament
+<div>
+    <h3> Shedulle for 1/4 finals </h3>
+    <form asp-action="ShedulleQuarter" asp-controller="Shedulles" method="post">
+        <input type="hidden" asp-for="@Model.Id" />
+        @for (int i = 0; i < 8; i++)
+        {
+            <div class="form-group">
+                <select name="clubs[]" asp-items="@ViewBag.Teams">
+                </select>
+            </div>
+        }
+        <input type="number" name="data" />
+        <input type="submit" name="Create" />
+    </form>
+</div>
+<div>
+    <h3> Shedulle for 1/2 finals </h3>
+    <form asp-action="ShedulleSemi" asp-controller="Shedulles" method="post">
+        <input type="hidden" asp-for="@Model.Id" />
+        @for (int i = 0; i < 4; i++)
+        {
+            <div class="form-group">
+                <select name="clubs[]" asp-items="@ViewBag.Teams">
+                </select>
+            </div>
+        }
+        <input type="number" name="data" />
+        <input type="submit" name="Create" />
+    </form>
+</div>
+<div>
+    <h3> Shedulle for FINAL </h3>
+    <form asp-action="ShedulleFinal" asp-controller="Shedulles" method="post">
+        <input type="hidden" asp-for="@Model.Id" />
+        @for (int i = 0; i < 4; i++)
+        {
+            <div class="form-group">
+                <select name="clubs[]" asp-items="@ViewBag.Teams">
+                </select>
+            </div>
+        }
+        <input type="number" name="data" />
+        <input type="submit" name="Create" />
+    </form>
+</div>

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zXakUQz952Rl5knhRFp5ZVwpEDh1KghtdjIXGNEPgt7S5x4mcoE8EFUhhPT2DmEZT3D8E9+ZpG0sXNkWf1TLFg==",
+  "dgSpecHash": "O2J+sdZ+bzI+l3CmjjCRFuibaxSNd0qmF90w6yrnE2SuSSZFmYRvWkvasFUZaNIhmlWkfSBB/kLLqBrL3X6RGg==",
   "success": true,
   "projectFilePath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\bootstrap.sass\\5.1.3\\bootstrap.sass.5.1.3.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

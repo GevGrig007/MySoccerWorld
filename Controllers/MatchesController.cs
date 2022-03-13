@@ -13,9 +13,9 @@ namespace MySoccerWorld.Controllers
 {
     public class MatchesController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<MatchesController> _logger;
         private readonly SoccerContext db;
-        public MatchesController(ILogger<HomeController> logger, SoccerContext context)
+        public MatchesController(ILogger<MatchesController> logger, SoccerContext context)
         {
             _logger = logger;
             db = context;

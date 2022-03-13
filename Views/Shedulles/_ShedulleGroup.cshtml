@@ -1,0 +1,18 @@
+﻿@model Tournament
+<div>
+    <h3>
+        Shedulle for Group Stage
+    </h3>
+    <form asp-action="ShedulleGroup" asp-controller="Shedulles" method="post">
+        <input type="hidden" asp-for="@Model.Id" />
+        @for (int i = 0; i < Model.Teams.Count; i++)
+        {
+            <div class="form-group">
+                <select name="clubs[]" asp-items="@ViewBag.Teams">
+                </select>
+            </div>
+        }
+        <input type="text" inputmode="numeric" name="data" />
+        <input type="submit" name="Create" />
+    </form>
+</div>
