@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MySoccerWorld</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/rating.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="row mr-0">
+        <div class="col-3">
+            <div class="sidebar flex-column flex-shrink-0">
+                <h4 class="fs-4">My Soccer World</h4>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Ratings" asp-action="Index">
+                            Clubs Ranking
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Ratings" asp-action="NationalRanking">
+                            Nationals Ranking
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Ratings" asp-action="Index">
+                            Nationals Ranking
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Ratings" asp-action="Index">
+                            Top Scorers
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Ratings" asp-action="Index">
+                            Top Asistants
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Leagues" class="modal-btn position-fixed" style="bottom:50px;">
+                            Generate Rating
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
