@@ -5,6 +5,9 @@
     background-attachment: fixed;
     background-size:100% 100%;
 }
+a{
+    text-decoration:none;
+}
 .table{
     border:solid;
 }
@@ -22,6 +25,13 @@
 }
 .table tbody {
     background-color: azure;
+}
+h1 {
+    display:flex;
+    justify-content:center;
+    color: blanchedalmond;
+    margin-bottom: 50px;
+    font-family: Impact;
 }
 #club {
     font-size: 18px;
@@ -64,7 +74,7 @@
 #matchplayoff .pen1 {
     float:left;
 }
-#matchplayoff .pen1 {
+#matchplayoff .pen2 {
     float: right;
 }
 #matchplayoff .goals {
@@ -114,4 +124,34 @@
 #goalscorers .count{
     background-color:brown;
     color:ivory;
+}
+.sidebar {
+    width: 20%;
+    background-color: #301e48;
+    border-right: solid;
+    color: white;
+    position: fixed;
+    padding: 20px;
+    display: flex;
+    height: 100%;
+}
+.sidebar h4{
+    margin-bottom:50px;
+}
+.sidebar a{
+    color:white;
+    padding:10px;
+    display:block;
+}
+.nav-item {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: darkturquoise;
+    border: solid 1px;
+    background-color: ghostwhite;
+    font-weight: 500;
+}
+.nav-item :hover{
+    color:aliceblue;
+    background-color:blue;
 }

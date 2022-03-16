@@ -41,7 +41,7 @@
                 <img src="@Model.Home.Flag" />
                 <div> @Model.Home.Name  </div>
             </div>
-            <a class="col-1 score" asp-controller="Matches" asp-action="EditScoreRegular" asp-route-id="@Model.Id">
+            <a class="col-1 score" asp-controller="Matches" asp-action="EditScore" asp-route-id="@Model.Id">
                 <div>
                     @Model.HomeScore-@Model.AwayScore
                 </div>
@@ -53,12 +53,10 @@
                     }
                 @if (Model.HomePen != null)
                     {
-                        <div>
                             @if (Model.HomePen == 1)
                             {<div class="pen1">pen</div>}
                             @if (Model.AwayPen == 1)
                             {<div class="pen2">pen</div>}
-                         </div>
                     } 
             </a>
             <div class="col-4 clubname">

@@ -6,6 +6,9 @@
     margin: 0;
     font-family: Candara, sans-serif;
 }
+a{
+    text-decoration:none;
+}
 h1 {
     color: blanchedalmond;
     font-family: Impact;
@@ -65,4 +68,38 @@ h1 {
 }
 .maincol {
     margin-left: 15%;
+}
+.tb {
+    width: 100%;
+    padding: 10px;
+}
+.tb thead {
+    background-color: darkslategray;
+}
+
+.tb th {
+    padding: 15px;
+}
+.table tbody a {
+    text-decoration:none;
+    color:azure;
+}
+.table thead a {
+    text-decoration: none;
+    color: white;
+}
+.table thead{
+    color:white;
+    font-size:20px;
+}
+.table {
+    color: blanchedalmond;
+}
+.table td{
+    vertical-align: unset;
+}
+.club {
+    font-variant-caps: small-caps;
+    font-weight: 600;
+    font-size: 18px;
 }

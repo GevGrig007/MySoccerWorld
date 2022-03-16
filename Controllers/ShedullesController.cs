@@ -193,7 +193,7 @@ namespace MySoccerWorld.Controllers
                 var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
                 db.Matches.AddRange(groupBm);
             }
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleKnockOut32(int id, int[] clubs, double data)
@@ -209,7 +209,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Shedulle32(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleKnockOut16(int id, int[] clubs, double data)
@@ -225,7 +225,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Shedulle16(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleKnockOut8(int id, int[] clubs, double data)
@@ -241,7 +241,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Shedulle8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleKnockOutQuarterDouble(int id, int[] clubs, double data)
@@ -257,7 +257,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.QuartersDouble(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleKnockOutSemiDouble(int id, int[] clubs, double data)
@@ -273,7 +273,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.SemiDouble(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleFinal(int id, int[] clubs, double data)
@@ -289,7 +289,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Final(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedullEuro8(int id, int[] clubs, double data)
@@ -305,7 +305,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.ShedulleEuro8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleQuarter(int id, int[] clubs, double data)
@@ -321,7 +321,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Quarters(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleSemi(int id, int[] clubs, double data)
@@ -337,7 +337,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.Semi(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
     }
 }

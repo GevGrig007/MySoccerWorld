@@ -3,8 +3,7 @@
     Layout = "_TournamentLayout";
     ViewData["Title"] = Model.Tournament.Name + "Info";
 }
-<h1 class="justify-content-center d-flex"
-    style="color: blanchedalmond; margin-bottom: 50px;  font-family: Impact;">
+<h1>
     @Model.Tournament.Name - @Model.Tournament.Season.Data
 </h1>
 <div class="container">
@@ -50,8 +49,8 @@
     <div class="mt-5">
         @foreach (var m in Model.Matches.OrderBy(c => c.Round).GroupBy(c => c.Round))
         {
-            <div>
-                <div class="row justify-content-center bg-success text-white p-2" style="border: solid 2px #3c14b9;font-size: 22px;font-weight: 700;">
+            <div class="roundrow">
+                <div class="round">
                     @m.Key ROUND
                 </div>
                 @foreach (var c in m)
