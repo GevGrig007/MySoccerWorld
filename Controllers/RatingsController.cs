@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MySoccerWorld.Models;
+using MySoccerWorld.Models.Entities;
 using MySoccerWorld.Models.Services;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace MySoccerWorld.Controllers
         }
         public async Task<IActionResult> RatingsCreate()
         {
-            var tournaments = await db.Tournaments.Include(t => t.Season).Include(t => t.Ratings).ToListAsync();
+            var tournaments = await db.Tournaments.Include(t => t.Season).Include(t => t.Ratings).Include(t=>t.League).ToListAsync();
             return View(tournaments);
         }
         public IActionResult CalculateRating(int id)
@@ -73,6 +74,28 @@ namespace MySoccerWorld.Controllers
                 }
             }
             return RedirectToAction("RatingsCreate");
+        }
+        public async Task<IActionResult> TopScorers()
+        {
+            var players = await db.Players.Include(p => p.Country).Include(p => p.PlayerTeams)
+                                                                  .ThenInclude(p => p.Goals)
+                                                                  .Include(p=>p.PlayerTeams)
+                                                                  .ThenInclude(p=>p.Asists)
+                                                                  .ToListAsync();
+            return View(players);
+        }
+        public async Task<IActionResult> SeasonalScorer(int? id)
+        {
+            Season season;
+            if (id != null) { season = await db.Seasons.FirstOrDefaultAsync(s => s.Id == id); }
+            else { season = await db.Seasons.OrderBy(s => s.Id).LastOrDefaultAsync(); } 
+            var players = await db.Players.Include(p => p.Country).Include(p => p.PlayerTeams)
+                                                                  .ThenInclude(p => p.Goals.Where(g=>g.Match.Tournament.Season==season))
+                                                                  .Include(p => p.PlayerTeams)
+                                                                  .ThenInclude(p => p.Asists.Where(g => g.Match.Tournament.Season == season))
+                                                                  .ToListAsync();
+            ViewBag.Seasons = await db.Seasons.OrderByDescending(s=>s.Data).ToListAsync();
+            return View(players);
         }
     }
 }

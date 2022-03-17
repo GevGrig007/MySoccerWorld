@@ -1,20 +1,80 @@
 ﻿@model IEnumerable<Tournament>
-<div class="container">
-    <div class="row">
-        @foreach (var t in Model)
-        {
-            <div class="col-4">
-                @t.Name @t.Season.Data
-            </div>
-            <a class="btn btn-success col-2" asp-action="CalculateRating" asp-route-id="@t.Id">
-                CALCULATE
-            </a>
-            <div class="col-4">
-                @if (t.Ratings.Count() > 0)
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Create Rating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="mainsection">
+    <div class="mainrow">
+        <div>
+            <div>
+                <h3> REGIONALS </h3>
+                @foreach (var t in Model.Where(t => t.League.Type == "Regional"))
                 {
-                    @t.Ratings.Count();
+                    <div class="row">
+                        <div class="col-7 p-2 center">
+                            @t.Name @t.Season.Data
+                        </div>
+                        <div class="col-4 p-2">
+                            <a class="btn btn-sm btn-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                CALCULATE
+                            </a>
+                        </div>
+                        <div class="col-1 p-2 center">
+                            @if (t.Ratings.Count() > 0)
+                            {
+                                @t.Ratings.Count();
+                            }
+                        </div>
+                    </div>
                 }
             </div>
-        }
+            <div>
+                <h3> EUROCUPS </h3>
+                @foreach (var t in Model.Where(t => t.League.Type == "EuroCup"))
+                {
+                    <div class="row">
+                        <div class="col-7 p-2 center">
+                            @t.Name @t.Season.Data
+                        </div>
+                        <div class="col-4 p-2">
+                            <a class="btn btn-sm btn-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                CALCULATE
+                            </a>
+                        </div>
+                        <div class="col-1 p-2 center">
+                            @if (t.Ratings.Count() > 0)
+                            {
+                                @t.Ratings.Count();
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div>
+                <h3> NATIONALS </h3>
+                @foreach (var t in Model.Where(t => t.League.Type == "National"))
+                {
+                    <div class="row">
+                        <div class="col-7 p-2 center">
+                            @t.Name @t.Season.Data
+                        </div>
+                        <div class="col-4 p-2">
+                            <a class="btn btn-sm btn-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                CALCULATE
+                            </a>
+                        </div>
+                        <div class="col-1 p-2 center">
+                            @if (t.Ratings.Count() > 0)
+                            {
+                                @t.Ratings.Count();
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>

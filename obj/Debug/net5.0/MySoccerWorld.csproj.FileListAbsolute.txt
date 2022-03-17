@@ -214,3 +214,5 @@ C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\V
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Ratings\NationalRanking.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Ratings\RatingsCreate.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Ratings\CalculateRating.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Ratings\TopScorers.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Ratings\SeasonalScorer.cshtml.g.cs

@@ -30,23 +30,18 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Ratings" asp-action="Index">
-                            Nationals Ranking
+                        <a asp-controller="Ratings" asp-action="SeasonalScorer">
+                            Seasonal Scorers
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Ratings" asp-action="Index">
-                            Top Scorers
+                        <a asp-controller="Ratings" asp-action="TopScorers">
+                            All Time Scorers
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Ratings" asp-action="Index">
-                            Top Asistants
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-action="Index" asp-controller="Leagues" class="modal-btn position-fixed" style="bottom:50px;">
-                            Generate Rating
+                        <a asp-action="RatingsCreate" asp-controller="Ratings" class="modal-btn position-fixed" style="bottom:50px;">
+                            GENERATE RATINGS
                         </a>
                     </li>
                 </ul>
