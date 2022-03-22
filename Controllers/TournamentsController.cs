@@ -48,32 +48,42 @@ namespace MySoccerWorld.Controllers
             var tournament = await db.Tournaments
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams.OrderBy(p => p.Season))
-                .Include(t => t.BestPlayers).ThenInclude(b => b.PlayerTeam).ThenInclude(p => p.Player)
                 .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .ToListAsync();
             var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
+            var bestplayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToList();
-            var standings = new Standings();
-            var tournamentStandings = standings.CalculatingTable(tournament.Matches, tournament.Teams);
-            var tournamentView = new TournamentViewModel()
+                                            .Where(p => p.TournamentId == id).ToListAsync();
+            if (matches.Count > 0)
+            {
+                var standings = new Standings();
+                var tournamentStandings = standings.CalculatingTable(tournament.Matches, tournament.Teams);
+                var tournamentView = new TournamentViewModel()
+                {
+                    Tournament = tournament,
+                    Teams = tournament.Teams.ToList(),
+                    Matches = matches,
+                    Goals = goalscorers,
+                    Asists = asisters,
+                    BestPlayer = bestplayers,
+                    TournamentStandings = tournamentStandings.OrderByDescending(c => c.Points)
+                                                             .ThenByDescending(c => c.GoalDifference)
+                                                             .ThenByDescending(c => c.GoalsFor)
+                };
+                return View(tournamentView);
+            }
+            var emptyTournamnet = new TournamentViewModel()
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                Matches = tournament.Matches.ToList(),
-                Goals = goalscorers,
-                Asists = asisters,
-                BestPlayer = bestplayers,
-                TournamentStandings = tournamentStandings.OrderByDescending(c => c.Points)
-                                                         .ThenByDescending(c => c.GoalDifference)
-                                                         .ThenByDescending(c => c.GoalsFor)
+                Matches = matches,
+                BestPlayer = bestplayers
             };
-            return View(tournamentView);
+            return View(emptyTournamnet);
         }
         public async Task<IActionResult> EuroCupDetails(int id)
         {
@@ -81,15 +91,15 @@ namespace MySoccerWorld.Controllers
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
                 .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .ToListAsync();
             var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
+            var bestplayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToList();
+                                            .Where(p => p.TournamentId == id).ToListAsync();
             var groups = new TournamentGroup();
             if (tournament.Matches.Count > 0)
             {
@@ -98,7 +108,7 @@ namespace MySoccerWorld.Controllers
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = tournament.Matches.ToList(),
+                    Matches = matches,
                     Goals = goalscorers,
                     Asists = asisters,
                     BestPlayer = bestplayers,
@@ -120,10 +130,10 @@ namespace MySoccerWorld.Controllers
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
                 .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .ToListAsync();
             var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
             var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
@@ -133,7 +143,7 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                Matches = tournament.Matches.ToList(),
+                Matches = matches,
                 Goals = goalscorers,
                 Asists = asisters,
                 BestPlayer = bestplayers
@@ -146,10 +156,10 @@ namespace MySoccerWorld.Controllers
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
                 .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .ToListAsync();
             var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
             var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
@@ -163,7 +173,7 @@ namespace MySoccerWorld.Controllers
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = tournament.Matches.ToList(),
+                    Matches = matches,
                     Goals = goalscorers,
                     Asists = asisters,
                     BestPlayer = bestplayers,
@@ -185,10 +195,10 @@ namespace MySoccerWorld.Controllers
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
                 .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
+                                          .ToListAsync();
             var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
             var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
@@ -202,7 +212,7 @@ namespace MySoccerWorld.Controllers
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = tournament.Matches.ToList(),
+                    Matches = matches,
                     Goals = goalscorers,
                     Asists = asisters,
                     BestPlayer = bestplayers,

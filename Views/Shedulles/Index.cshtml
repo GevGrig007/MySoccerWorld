@@ -116,7 +116,7 @@
         </div>
         <div class="col-4 mainrow">
             <h3 class="center"> BEST   PLAYERS </h3>
-            @foreach (var c in Model.BestPlayers)
+            @foreach (var c in ViewBag.BestPlayers)
             {
                 <div class="maincol"> @c.Position - @c.PlayerTeam.Player.Name || <a asp-route-id="@c.Id" asp-action="Edit" asp-controller="BestPlayers" class="modalItem">EDIT</a> </div>
 

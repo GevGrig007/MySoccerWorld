@@ -50,11 +50,6 @@ html {
   position: relative;
   min-height: 100%;
 }
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
 .footer {
   position: absolute;
   bottom: 0;
@@ -62,7 +57,6 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
-
 .linkforcreate {
     display: flex;
     justify-content: center;
@@ -71,4 +65,76 @@ body {
     color: aliceblue;
     font-size: 18px;
     margin-top: 100px;
+}
+
+body {
+    background: url(../images/dark-wood.png);
+    background-attachment: fixed;
+    background-color: #000083;
+    padding: 0;
+    margin: 0;
+    font-family: Candara, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+.nav-item {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: darkturquoise;
+    border: solid 1px;
+    background-color: ghostwhite;
+    font-weight: 500;
+}
+.nav-item :hover {
+    color: aliceblue;
+    background-color: blue;
+}
+.mainrow {
+    display:flex;
+    flex-direction:column;
+    flex-shrink:unset;
+    color:white;
+    height:100%;
+    padding:10px;
+    position:fixed;
+    box-shadow: 1px 1px 15px 1px;
+}
+.table {
+    color:white;
+}
+.table thead {
+    color: navy;
+}
+#goalscorers {
+    border: solid;
+    border-color: ivory;
+    margin-top: 25px;
+    padding: 0;
+}
+#goalscorers .title {
+    font-size: x-large;
+    background-color: navy;
+    color: darkorange;
+    font-family: cursive;
+    justify-content: center;
+    border-bottom: solid;
+    display: flex;
+}
+#goalscorers .player{
+    background-color:lightblue;
+    font-size:14px;
+    margin-left:0;
+}
+#goalscorers .team{
+    font-size:13px;
+    background-color: aliceblue;
+}
+#goalscorers .count{
+    background-color:brown;
+    color:ivory;
+}
+.score {
+    background: linear-gradient( 45deg, #dc3545, transparent);
+    color: white;
 }

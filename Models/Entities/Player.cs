@@ -16,13 +16,13 @@ namespace MySoccerWorld.Models.Entities
         public int? CountryId { get; set; }
         public Country Country { get; set; }
         public virtual ICollection<PlayerTeam> PlayerTeams { get; set; }
-        public PlayerTeam CurentTeamPlayer
-        {
-            get 
-            {
-                var currentTeam = PlayerTeams.OrderBy(p=>p.Season).Last();
-                return currentTeam;
-            }         
-        }
+        //public PlayerTeam CurentTeamPlayer
+        //{
+        //    get 
+        //    {
+        //        var currentTeam = PlayerTeams.OrderBy(p=>p.Season).LastOrDefault();
+        //        return currentTeam;
+        //    }         
+        //}
     }
 }

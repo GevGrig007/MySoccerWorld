@@ -26,7 +26,6 @@ namespace MySoccerWorld.Controllers
             var tournament = await db.Tournaments
                 .Include(t => t.League)
                 .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.BestPlayers).ThenInclude(b => b.PlayerTeam).ThenInclude(p => p.Player)
                 .Include(t => t.Season)
                 .Include(t => t.Matches)
                 .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
@@ -34,6 +33,9 @@ namespace MySoccerWorld.Controllers
                 .FirstOrDefaultAsync(x => x.Id == id);
             var teams = tournament.Teams.ToList();
             ViewBag.Teams = new SelectList(teams, "Id", "Name");
+            ViewBag.BestPlayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
+                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
+                                            .Where(p => p.TournamentId == id).ToListAsync();
             return View(tournament);
         }
         // Add Teams

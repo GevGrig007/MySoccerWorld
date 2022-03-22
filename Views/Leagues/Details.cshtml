@@ -4,7 +4,7 @@
 }
 <div class="row" style="margin-right:0;">
     <div class="col-3">
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100 position-fixed" style="width:20%">
+        <div class="mainrow" style="width:20%">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <h4 class="fs-4" style="margin-bottom:50px;">My Soccer World</h4>
             </a>
@@ -75,7 +75,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th> SEASON </th>
+                                <th style="background-color: cornsilk"> SEASON </th>
                                 <th style="background-color:gold"> WINNER </th>
                                 <th style="background-color:lightgray"> SILVER </th>
                                 <th style="background-color:goldenrod"> BRONZE </th>
@@ -89,27 +89,27 @@
                                     <td>  @r.Key.Season.Data </td>
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Position == 1))
                                     {
-                                        <td> @t.Team.Name  </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name  </td>
                                     }
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Winner"))
                                     {
-                                        <td> @t.Team.Name </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Position == 2))
                                     {
-                                        <td> @t.Team.Name </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Silver"))
                                     {
-                                        <td> @t.Team.Name </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Position == 3))
                                     {
-                                        <td> @t.Team.Name </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
                                     @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Bronze"))
                                     {
-                                        <td> @t.Team.Name </td>
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
                                 </tr>
                             }
@@ -129,59 +129,47 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <div style="border: solid; border-color: coral; margin-top: 25px;">
-                            <div class="" style="font-size: x-large;
-                                  background-color: navy;
-                                  color: darkorange;
-                                  font-family: cursive;
-                                  justify-content: center;
-                                  border-bottom: solid;
-                                  display: flex;">
+                        <div id="goalscorers">
+                            <div class="title">
                                 GOALSCORERS
                             </div>
                             @foreach (var c in Model.Goals.GroupBy(p => p.Player).OrderByDescending(p => p.Key.PlayerTeams.Sum(p => p.Goals.Count)).Take(15))
                             {
                                 <div class="row m-0" style="border-bottom:1px solid">
-                                    <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                    <div class="col-6 player">
                                         @c.Key.Name
                                     </div>
-                                    <div class="col-5" style="font-size:13px;">
+                                    <div class="col-5 team">
                                         @foreach (var g in c.Key.PlayerTeams)
                                         {
                                             if (g.Goals.Count() > 0)
                                             {<div> @g.Team.Name - @g.Goals.Count() </div>}
                                     }
                                     </div>
-                                    <div class="col-1" style="background-color:brown;color:ivory">@c.Key.PlayerTeams.Sum(c => c.Goals.Count())</div>
+                                    <div class="col-1 count" >@c.Key.PlayerTeams.Sum(c => c.Goals.Count())</div>
                                 </div>
                             }
                         </div>
                     </div>
                     <div class="col-6">
-                        <div style="border: solid; border-color: coral; margin-top:25px;">
-                            <div class="" style="font-size: x-large;
-                                  background-color: navy;
-                                  color: darkorange;
-                                  font-family: cursive;
-                                  justify-content: center;
-                                  border-bottom: solid;
-                                  display: flex;">
+                        <div id="goalscorers">
+                            <div class="title">
                                 ASSISTANTS
                             </div>
                             @foreach (var c in Model.Asists.GroupBy(p => p.Player).OrderByDescending(p => p.Key.PlayerTeams.Sum(p => p.Asists.Count)).Take(15))
                             {
                                 <div class="row m-0" style="border-bottom:1px solid">
-                                    <div class="col-6" style="background-color:lightblue;font-size:14px;margin-left:0;">
+                                    <div class="col-6 player">
                                         @c.Key.Name
                                     </div>
-                                    <div class="col-5" style="font-size:13px;">
+                                    <div class="col-5 team">
                                         @foreach (var g in c.Key.PlayerTeams)
                                         {
                                             if (g.Asists.Count() > 0)
                                             {<div> @g.Team.Name - @g.Asists.Count() </div>}
                                     }
                                     </div>
-                                    <div class="col-1" style="background-color:brown;color:ivory">@c.Key.PlayerTeams.Sum(c => c.Asists.Count())</div>
+                                    <div class="col-1 count">@c.Key.PlayerTeams.Sum(c => c.Asists.Count())</div>
                                 </div>
                             }
                         </div>
