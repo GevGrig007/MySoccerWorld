@@ -25,8 +25,10 @@ namespace MySoccerWorld.Models.Entities
         {
             get
             {
-                var rating = Ratings.Sum(c => c.Points);
-                return rating;
+                if (this.Ratings != null){
+                    var rating = Ratings.Sum(c => c.Points);
+                    return rating; }
+                else { return 0; }
             }
         }
     }

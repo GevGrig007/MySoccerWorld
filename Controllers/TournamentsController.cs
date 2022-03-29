@@ -238,7 +238,12 @@ namespace MySoccerWorld.Controllers
                 .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            return View(tournament);
+            var view = new QualificationViewModel()
+            {
+                Tournament = tournament,
+                Matches = tournament.Matches.ToList()
+            };
+            return View(view);
         }
         // CRUD Tournaments 
         public async Task<IActionResult> TournamentManage(int id)
@@ -327,6 +332,20 @@ namespace MySoccerWorld.Controllers
                                    .Include(t => t.Season)
                                    .FirstOrDefaultAsync(t => t.Id == id);
             return View(tournament);
+        }
+        // GoalScorers
+        public async Task<IActionResult> GoalScorers(int id)
+        {
+            var tournament = await db.Tournaments.FirstOrDefaultAsync(p => p.Id == id);
+            var players =await db.PlayerTeams.Include(p=>p.Player).Include(p=>p.Team)
+                                             .Include(p => p.Goals.Where(g => g.Match.Tournament == tournament))
+                                             .Include(p => p.Asists.Where(g => g.Match.Tournament == tournament)).ToListAsync();
+            var view = new GoalScorersViewModel()
+            {
+                PlayerTeams = players,
+                Tournament = tournament
+            };
+            return View(view);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MySoccerWorld.Models;
@@ -68,9 +69,9 @@ namespace MySoccerWorld.Controllers
         [HttpPost]
         public IActionResult CreatePlayer(National national, int[] selectedPlayers)
         {
-            National newNational = db.Nationals.Include(n => n.PlayerTeams).FirstOrDefault(n => n.Id == national.Id);
+            Team newNational = db.Teams.Include(n => n.PlayerTeams).FirstOrDefault(n => n.Id == national.Id);
             newNational.Name = national.Name;
-            newNational.PlayerTeams.Clear();
+            //newNational.PlayerTeams.Clear();
             if (selectedPlayers != null)
             {
                 foreach (var c in db.Players.Where(c => selectedPlayers.Contains(c.Id)))
@@ -82,6 +83,21 @@ namespace MySoccerWorld.Controllers
             db.Entry(newNational).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index", new { id = newNational.Id });
+        }
+        public IActionResult CreateNational()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateNational([Bind("Name,Country,REgion")] National national)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Add(national);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(national);
         }
     }
 }

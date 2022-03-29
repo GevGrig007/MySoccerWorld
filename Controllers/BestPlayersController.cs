@@ -32,8 +32,8 @@ namespace MySoccerWorld.Controllers
         {
             for (int i = 0; i < TournamentId.Length; i++)
             {
-                var player = db.Players.Include(p => p.PlayerTeams).FirstOrDefault(p => p.Id == PlayerTeamId[i]);
-                var playerTeam = player.PlayerTeams.OrderBy(p => p.Season).LastOrDefault();
+                var player = db.Players.Include(p => p.PlayerTeams).ThenInclude(p=>p.Season).FirstOrDefault(p => p.Id == PlayerTeamId[i]);
+                var playerTeam = player.PlayerTeams.Where(p=>p.Season!=null).LastOrDefault();
                 var bestplayer = new BestPlayer()
                 {
                     TournamentId = TournamentId[i],

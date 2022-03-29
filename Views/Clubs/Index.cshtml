@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Club>
-@{ 
+@{
     Layout = "_General";
     ViewData["Title"] = "Clubs";
 }
 @await Html.PartialAsync("MenuHeader")
 <div class="container">
+    <div> <a class="modalItem btn btn-secondary mb-4" asp-action="CreateClub"> Create new CLUB </a>  </div>
     <div class="mainsection">
         <table class="table tb mainrow">
             <thead>
@@ -55,3 +56,20 @@
         </table>
     </div>
 </div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".modalItem").click(function (e) {
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            });
+        });
+    })
+</script>

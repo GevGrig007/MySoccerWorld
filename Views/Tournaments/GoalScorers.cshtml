@@ -1,0 +1,33 @@
+﻿@model GoalScorersViewModel
+@{
+    Layout = "_TournamentLayout";
+}
+@{
+    foreach (var p in Model.PlayerTeams.Where(p => p.Goals.Count > 0 || p.Asists.Count > 0).GroupBy(c => c.Team))
+    {
+        <div class="container">
+           
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> @p.Key.Name </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in p)
+                    {
+                        <tr>
+                            <td> @c.Player.Name </td>
+                            <td> @c.Goals.Count() </td>
+                            <td> @c.Asists.Count() </td>
+                        </tr>
+                    }
+                </tbody>
+             </table>
+           
+        </div>
+    }
+}
+

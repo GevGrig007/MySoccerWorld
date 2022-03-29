@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MySoccerWorld.Models;
@@ -38,7 +39,7 @@ namespace MySoccerWorld.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var players = await db.Players.Include(p=>p.Country).Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player).ToListAsync();
+            var players = await db.Players.Include(p => p.Country).Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player).ToListAsync();
             var clubPlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == id).ToList();
             var club = await db.Clubs.Include(c => c.Ratings).ThenInclude(r => r.Tournament).ThenInclude(t => t.Season)
                                                            .Include(c => c.Country)
@@ -64,8 +65,24 @@ namespace MySoccerWorld.Controllers
             var matches = await db.Matches.Include(m => m.Tournament).Include(m => m.Home).Include(m => m.Away)
                                            .Include(m => m.Goals).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
                                            .Include(m => m.Asists).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Where(m => m.HomeTeam == id || m.AwayTeam == id).OrderBy(m=>m.Data).ToListAsync();
+                                           .Where(m => m.HomeTeam == id || m.AwayTeam == id).OrderBy(m => m.Data).ToListAsync();
             return View(matches);
+        }
+        public IActionResult CreateClub ()
+        {
+            ViewBag.Country = new SelectList(db.Countries, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateClub([Bind("Name,Country,Flag")] Club club)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Add(club);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(club);
         }
     }
 }

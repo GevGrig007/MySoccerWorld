@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body p-0">
         <form asp-action="CreatePlayer" asp-controller="Nationals" method="post">
-            <h3 class="d-flex justify-content-center" style="background-color:brown;color:antiquewhite;padding:5px;"> Select Teams </h3>
+            <h3 class="d-flex justify-content-center" style="background-color:brown;color:antiquewhite;padding:5px;"> Select Players </h3>
             @Html.HiddenFor(model => model.Id)
             <div class="d-flex justify-content-center">
                 @Html.EditorFor(model => model.Name)
@@ -18,7 +18,7 @@
             @foreach (Player p in players)
             {
                 <input type="checkbox" name="selectedPlayers" value="@p.Id" style="margin-left:20%;"
-                       @*@(Model.Teams.Contains(c) ? "checked=\"checked\"" : "")*@ />
+                     @if (Model.PlayerTeams != null) { @(Model.PlayerTeams.Contains(p.PlayerTeams.OrderBy(p => p.Season).LastOrDefault()) ? "checked=\"checked\"" : "") }/>
                 @p.Name
                 <br />
             }
