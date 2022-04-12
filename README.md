@@ -20,4 +20,6 @@
 </div>
 <div>
         Detailed collection of statistics for season and all-time
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/seasonalrating.png" widht="100" height="110" />
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/alltimerating.png"  widht="100" height="100"/>
 </div>
