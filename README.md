@@ -10,7 +10,7 @@
     </p>
         <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/tournaments.png" />
 
-    <p align="center">
+    <div align="center">
         National Cups , Euro Cups and REGIONAL tournaments (several countries that are united by geographical location )
         <div >
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/nationaltournaments.png" />
@@ -18,7 +18,7 @@
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/regional.png" />
         </div>
 
-    </p>
+    </div>
 </div>
 <div>
         Detailed collection of statistics for season and all-time
