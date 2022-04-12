@@ -12,7 +12,7 @@
 
     <p align="center">
         National Cups , Euro Cups and REGIONAL tournaments (several countries that are united by geographical location )
-        <div class="row">
+        <div >
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/nationaltournaments.png" />
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/eurocups.png" />
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/regional.png" />
