@@ -22,6 +22,6 @@
      <p align="center">
         Detailed collection of statistics for season and all-time
     </p>
-        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/seasonalrating.png" widht="100" height="110" />
-        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/alltimerating.png"  widht="100" height="100"/>
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/seasonalrating.png" widht="300" height="300" />
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/alltimerating.png"  widht="300" height="300"/>
 </div>
