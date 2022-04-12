@@ -2,13 +2,13 @@
     <p align="center">
         App for business logic football game like PES, FIFA
     </p>
-        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/main.png" />
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/main.png" widht="600" height="600"/>
 </div>
 <div>
     <p align="center">
         Creating your own tournaments
     </p>
-        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/tournaments.png" />
+        <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/tournaments.png" widht="500" height="500" />
 </div>
 <div align="center">
         National Cups , Euro Cups and REGIONAL tournaments - several countries that are united by geographical location 
