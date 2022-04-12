@@ -13,9 +13,9 @@
 <div align="center">
         National Cups , Euro Cups and REGIONAL tournaments - several countries that are united by geographical location 
         <div>
-             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/nationaltournaments.png" widht="200" height="200" />
-             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/eurocups.png" widht="200" height="200" />
-             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/regional.png"  widht="200" height="200"/>
+             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/nationaltournaments.png" widht="150" height="200" />
+             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/eurocups.png" widht="150" height="200" />
+             <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/regional.png"  widht="150" height="200"/>
         </div>
 </div>
 <div>
