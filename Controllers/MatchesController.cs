@@ -59,18 +59,34 @@ namespace MySoccerWorld.Controllers
         }
         public async Task<IActionResult> EditScore(int id)
         {
-            var match = await db.Matches.Include(m => m.Home).Include(m => m.Away).FirstOrDefaultAsync(m => m.Id == id);
+            var match = await db.Matches.Include(m => m.Home).Include(m => m.Away)
+                                        .Include(m => m.Tournament).ThenInclude(m => m.League)
+                                        .FirstOrDefaultAsync(m => m.Id == id);
             var players = db.Players.Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player)
                                      .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
                                      .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists)
                                     .ToList();
-            var matchView = new MatchViewModel()
+            if (match.Tournament.League.Type == "National")
             {
-                Match = match,
-                HomePlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.HomeTeam).ToList(),
-                AwayPlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.AwayTeam).ToList()
-            };
-            return View(matchView);
+                var matchView = new MatchViewModel()
+                {
+                    Match = match,
+                    HomePlayers = players.Where(p => p.PlayerTeams.FirstOrDefault().TeamId == match.HomeTeam).ToList(),
+                    AwayPlayers = players.Where(p => p.PlayerTeams.FirstOrDefault().TeamId == match.AwayTeam).ToList()
+                };
+                return View(matchView);
+            }
+            else
+            {
+                var matchView = new MatchViewModel()
+                {
+                    Match = match,
+                    HomePlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.HomeTeam).ToList(),
+                    AwayPlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.AwayTeam).ToList()
+                };
+                return View(matchView);
+            }
+            
         }
         [HttpPost]
         public async Task<IActionResult> EditScore(int id, [Bind("Id,Round,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,TournamentId,Group")] Match match)

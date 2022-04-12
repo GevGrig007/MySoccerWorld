@@ -49,7 +49,7 @@ namespace MySoccerWorld.Controllers
             }
             ViewBag.Clubs = db.Clubs.Where(c => c.Country.Region == tournament.League.Region).ToList();
             ViewBag.EuroClubs = db.Clubs.ToList();
-            ViewBag.Nationals = db.Nationals.ToList();
+            ViewBag.Nationals = db.Nationals.OrderBy(n=>n.Region).ToList();
             return View(tournament);
         }
         [HttpPost]
@@ -85,7 +85,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.GenerateFor9Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleFor12(int id, int[] clubs, double data)
@@ -101,7 +101,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = generateShedulle.GenerateFor12Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
         public async Task<IActionResult> ShedulleFor16(int id, int[] clubs, double data)
@@ -182,6 +182,25 @@ namespace MySoccerWorld.Controllers
                 db.Matches.AddRange(groupCm);
                 var groupD = new TournamentGroup { Name = "D" };
                 var groupDm = groupD.EuroGroupShedulle(tournament, groupDteams, data);
+                db.Matches.AddRange(groupDm);     
+            }
+            else if (teams.Count == 16)
+            {
+                var groupAteams = new List<Team> { teams[0], teams[1], teams[2], teams[3] };
+                var groupBteams = new List<Team> { teams[4], teams[5], teams[6], teams[7] };
+                var groupCteams = new List<Team> { teams[8], teams[9], teams[10], teams[11] };
+                var groupDteams = new List<Team> { teams[12], teams[13], teams[14], teams[15] };
+                var groupA = new TournamentGroup { Name = "A" };
+                var groupAm = groupA.GroupShedulle(tournament, groupAteams, data);
+                db.Matches.AddRange(groupAm);
+                var groupB = new TournamentGroup { Name = "B" };
+                var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
+                db.Matches.AddRange(groupBm);
+                var groupC = new TournamentGroup { Name = "C" };
+                var groupCm = groupC.GroupShedulle(tournament, groupCteams, data);
+                db.Matches.AddRange(groupCm);
+                var groupD = new TournamentGroup { Name = "D" };
+                var groupDm = groupD.GroupShedulle(tournament, groupDteams, data);
                 db.Matches.AddRange(groupDm);
             }
             else if (teams.Count == 8)
@@ -195,6 +214,7 @@ namespace MySoccerWorld.Controllers
                 var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
                 db.Matches.AddRange(groupBm);
             }
+            db.SaveChanges();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]

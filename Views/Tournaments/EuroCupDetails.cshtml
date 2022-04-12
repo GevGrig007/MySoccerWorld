@@ -8,7 +8,7 @@
 </h1>
 <div>
     @{
-        if (Model.Tournament.Matches.Count > 0)
+        if (Model.Matches.Count > 0)
         {
             <div>
                 <div>
@@ -37,9 +37,9 @@
                         @await Html.PartialAsync("KnockOut", Model.Matches)
                     </div>
                 </div>
-                <div>
-                    <div class="row m-0">
-                        <div class="col-6" id="goalscorers">
+                <div class="row">
+                    <div class="col-6">
+                        <div id="goalscorers">
                             <div class="title">
                                 GOALSCORERS
                             </div>
@@ -54,7 +54,9 @@
                                 </div>
                             }
                         </div>
-                        <div class="col-6" id="goalscorers">
+                    </div>
+                    <div class="col-6">
+                        <div id="goalscorers">
                             <div class="title">
                                 ASSISTANTS
                             </div>

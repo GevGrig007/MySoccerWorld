@@ -101,7 +101,7 @@ namespace MySoccerWorld.Controllers
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
                                             .Where(p => p.TournamentId == id).ToListAsync();
             var groups = new TournamentGroup();
-            if (tournament.Matches.Count > 0)
+            if (matches.Count > 0)
             {
                 var tournamentsGroup = groups.Group8(tournament);
                 var tournamentView = new EuroCupViewModel()
@@ -120,6 +120,7 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
+                Matches = matches,
                 BestPlayer = bestplayers
             };
             return View(emptyTournamnet);
@@ -145,6 +146,7 @@ namespace MySoccerWorld.Controllers
                 Teams = tournament.Teams.ToList(),
                 Matches = matches,
                 Goals = goalscorers,
+
                 Asists = asisters,
                 BestPlayer = bestplayers
             };
@@ -160,13 +162,14 @@ namespace MySoccerWorld.Controllers
             var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                                           .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
                                           .ToListAsync();
-            var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
+            //var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
+            var goalscorers = db.PlayerTeams.Where(p=>p.Goals.Where(g=>g.Match.TournamentId==id).Count()>0).Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
             var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
             var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
                                             .Where(p => p.TournamentId == id).ToList();
             var groups = new TournamentGroup();
-            if (tournament.Matches.Count > 0)
+            if (matches.Count > 0)
             {
                 var tournamentsGroup = groups.Group2(tournament);
                 var tournamentView = new EuroCupViewModel()
@@ -185,7 +188,8 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                BestPlayer = bestplayers
+                BestPlayer = bestplayers,
+                Matches = matches
             };
             return View(emptyTournamnet);
         }
@@ -205,7 +209,7 @@ namespace MySoccerWorld.Controllers
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
                                             .Where(p => p.TournamentId == id).ToList();
             var groups = new TournamentGroup();
-            if (tournament.Matches.Count > 0)
+            if (matches.Count > 0)
             {
                 var tournamentsGroup = groups.EuroGroup(tournament);
                 var tournamentView = new EuroCupViewModel()
@@ -224,7 +228,8 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                BestPlayer = bestplayers
+                BestPlayer = bestplayers,
+                Matches = matches
             };
             return View(emptyTournamnet);
         }
@@ -338,14 +343,55 @@ namespace MySoccerWorld.Controllers
         {
             var tournament = await db.Tournaments.FirstOrDefaultAsync(p => p.Id == id);
             var players =await db.PlayerTeams.Include(p=>p.Player).Include(p=>p.Team)
+                                             .Include(p=>p.Player).ThenInclude(p=>p.Country)
                                              .Include(p => p.Goals.Where(g => g.Match.Tournament == tournament))
                                              .Include(p => p.Asists.Where(g => g.Match.Tournament == tournament)).ToListAsync();
+            var awards = await db.TournamentAwards.Include(a => a.PlayerTeam).ThenInclude(p => p.Player)
+                                                  .Include(a => a.PlayerTeam).ThenInclude(p => p.Team)
+                                                  .Include(a => a.CoachTeam).ThenInclude(p => p.Coach)
+                                                  .Include(a => a.CoachTeam).ThenInclude(p => p.Team)
+                                                  .Where(t => t.TournamentId == id).ToListAsync();
             var view = new GoalScorersViewModel()
             {
                 PlayerTeams = players,
-                Tournament = tournament
+                Tournament = tournament,
+                TournamentAwards = awards
             };
             return View(view);
+        }
+        public IActionResult CreateAwards(int id)
+        {
+            Tournament tournament = db.Tournaments.Find(id);
+            ViewBag.Tournament = tournament;
+            ViewBag.Players = new SelectList(db.Players.Include(p => p.PlayerTeams).OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Coaches = new SelectList(db.Coaches.Include(p => p.CoachTeams).OrderBy(p => p.Name), "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateAwards(int TournamentId, int? PlayerTeamId , int? CoachTeamId, AwardsType AwardsName)
+        {
+            var tournamentaward = new TournamentAward();
+            if (PlayerTeamId != null)
+            {
+                var player = db.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == PlayerTeamId);
+                var playerTeam = player.PlayerTeams.Where(p => p.Season != null).LastOrDefault();
+                tournamentaward.PlayerTeamId = playerTeam.Id;
+                tournamentaward.TournamentId = TournamentId;
+                tournamentaward.AwardsName = AwardsName;
+                db.Add(tournamentaward);
+                db.SaveChanges();
+            }
+            if(CoachTeamId != null)
+            {
+                var coach = db.Coaches.Include(p => p.CoachTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == CoachTeamId);
+                var coachteam = coach.CoachTeams.Where(p => p.Season != null).LastOrDefault();
+                tournamentaward.CoachTeamId = coachteam.Id;
+                tournamentaward.TournamentId = TournamentId;
+                tournamentaward.AwardsName = AwardsName;
+                db.Add(tournamentaward);
+                db.SaveChanges();
+            }
+            return RedirectToAction("GoalScorers",  new { id = TournamentId });
         }
     }
 }

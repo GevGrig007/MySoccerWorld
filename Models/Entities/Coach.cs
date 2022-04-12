@@ -13,17 +13,17 @@ namespace MySoccerWorld.Models.Entities
 
         [MaxLength(50, ErrorMessage = "Text must be less than 50 characters")]
         public string Name { get; set; }
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         public Country Country { get; set; }
         public ICollection<CoachTeam> CoachTeams { get; set; }
 
-        public CoachTeam CurrentTeam
-        {
-            get
-            {
-                var coach = CoachTeams.OrderBy(c => c.Season).Last();
-                return coach;
-            }
-        }
+        //public CoachTeam CurrentTeam
+        //{
+        //    get
+        //    {
+        //        var coach = CoachTeams.OrderBy(c => c.Season).Last();
+        //        return coach;
+        //    }
+        //}
     }
 }

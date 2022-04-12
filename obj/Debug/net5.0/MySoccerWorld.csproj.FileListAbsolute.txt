@@ -219,3 +219,4 @@ C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\V
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\GoalScorers.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Clubs\CreateClub.cshtml.g.cs
 C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Nationals\CreateNational.cshtml.g.cs
+C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\obj\Debug\net5.0\Razor\Views\Tournaments\CreateAwards.cshtml.g.cs

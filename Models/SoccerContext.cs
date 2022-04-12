@@ -34,11 +34,11 @@ namespace MySoccerWorld.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new MatchesMap());
-            modelBuilder.Entity<CoachTeam>()
-                .HasOne(ct => ct.Coach)
-                .WithMany(ct => ct.CoachTeams)
-                .HasForeignKey(ct => ct.CoachId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<CoachTeam>()
+            //    .HasOne(ct => ct.Coach)
+            //    .WithMany(ct => ct.CoachTeams)
+            //    .HasForeignKey(ct => ct.CoachId)
+            //    .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Player>().HasAlternateKey(x => x.Name);
             modelBuilder.Entity<Team>().HasAlternateKey(x => x.Name);
             modelBuilder.Entity<Coach>().HasAlternateKey(x => x.Name);

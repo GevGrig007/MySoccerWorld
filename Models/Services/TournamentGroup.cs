@@ -17,19 +17,87 @@ namespace MySoccerWorld.Models.Services
         public List<TournamentGroup> Group8(Tournament tournament)
         {
             var standings = new Standings();
+            if(tournament.Teams.Count == 16)
+            {
+                var groupAm = tournament.Matches.Where(m => m.Group == "A");
+                var team1 = groupAm.ToList()[0].Home;
+                var team2 = groupAm.ToList()[0].Away;
+                var team3 = groupAm.ToList()[5].Home;
+                var team4 = groupAm.ToList()[5].Away;
+                var groupAteams = new List<Team> {team1,team2,team3,team4};
+                var standingsA = standings.CalculatingTable(groupAm, groupAteams);
+                var groupA = new TournamentGroup()
+                {
+                    Name = "A",
+                    Teams = groupAteams,
+                    Tournament = tournament,
+                    Matches = groupAm,
+                    GroupStandings = standingsA.OrderByDescending(c => c.Points)
+                                                             .ThenByDescending(c => c.GoalDifference)
+                                                             .ThenByDescending(c => c.GoalsFor)
+                };
+                var groupBm = tournament.Matches.Where(m => m.Group == "B");
+                var team5 = groupBm.ToList()[0].Home;
+                var team6 = groupBm.ToList()[0].Away;
+                var team7 = groupBm.ToList()[1].Home;
+                var team8 = groupBm.ToList()[1].Away;
+                var groupBteams = new List<Team> { team5, team6, team7, team8 };
+                var standingsB = standings.CalculatingTable(groupBm, groupBteams);
+                var groupB = new TournamentGroup()
+                {
+                    Name = "B",
+                    Teams = groupBteams,
+                    Tournament = tournament,
+                    Matches = groupBm,
+                    GroupStandings = standingsB.OrderByDescending(c => c.Points)
+                                                             .ThenByDescending(c => c.GoalDifference)
+                                                             .ThenByDescending(c => c.GoalsFor)
+                };
+                var groupCm = tournament.Matches.Where(m => m.Group == "C");
+                var team9 = groupCm.ToList()[0].Home;
+                var team10 = groupCm.ToList()[0].Away;
+                var team11 = groupCm.ToList()[1].Home;
+                var team12 = groupCm.ToList()[1].Away;
+                var groupCteams = new List<Team> { team9, team10, team11, team12 };
+                var standingsC = standings.CalculatingTable(groupCm, groupCteams);
+                var groupC = new TournamentGroup()
+                {
+                    Name = "C",
+                    Teams = groupCteams,
+                    Tournament = tournament,
+                    Matches = groupCm,
+                    GroupStandings = standingsC.OrderByDescending(c => c.Points)
+                                                             .ThenByDescending(c => c.GoalDifference)
+                                                             .ThenByDescending(c => c.GoalsFor)
+                };
+                var groupDm = tournament.Matches.Where(m => m.Group == "D");
+                var team13 = groupDm.ToList()[0].Home;
+                var team14 = groupDm.ToList()[0].Away;
+                var team15 = groupDm.ToList()[1].Home;
+                var team16 = groupDm.ToList()[1].Away;
+                var groupDteams = new List<Team> { team13, team14, team15, team16 };
+                var standingsD = standings.CalculatingTable(groupDm, groupDteams);
+                var groupD = new TournamentGroup()
+                {
+                    Name = "D",
+                    Teams = groupDteams,
+                    Tournament = tournament,
+                    Matches = groupDm,
+                    GroupStandings = standingsD.OrderByDescending(c => c.Points)
+                                                             .ThenByDescending(c => c.GoalDifference)
+                                                             .ThenByDescending(c => c.GoalsFor)
+                };
+                var groups = new List<TournamentGroup>() { groupA, groupB, groupC, groupD };
+                return groups;
+            }
+            else { 
             var groupAm = tournament.Matches.Where(m => m.Group == "A");
             var team1 = groupAm.ToList()[0].Home;
             var team2 = groupAm.ToList()[0].Away;
             var team3 = groupAm.ToList()[1].Home;
             var team4 = groupAm.ToList()[1].Away;
-            var groupAteams = new List<Team>
-            {
-                team1,
-                team2,
-                team3,
-                team4
-            };
-            var standingsA = standings.CalculatingTable(groupAm, groupAteams);
+            var groupAteams = new List<Team> { team1, team2, team3, team4 };
+                var standingsA = standings.CalculatingTable(groupAm, groupAteams);
             var groupA = new TournamentGroup()
             {
                 Name = "A",
@@ -45,14 +113,8 @@ namespace MySoccerWorld.Models.Services
             var team6 = groupBm.ToList()[0].Away;
             var team7 = groupBm.ToList()[1].Home;
             var team8 = groupBm.ToList()[1].Away;
-            var groupBteams = new List<Team>
-            {
-                team5,
-                team6,
-                team7,
-                team8
-            };
-            var standingsB = standings.CalculatingTable(groupBm, groupBteams);
+            var groupBteams = new List<Team> { team5, team6, team7, team8 };
+                var standingsB = standings.CalculatingTable(groupBm, groupBteams);
             var groupB = new TournamentGroup()
             {
                 Name = "B",
@@ -68,14 +130,8 @@ namespace MySoccerWorld.Models.Services
             var team10 = groupCm.ToList()[0].Away;
             var team11 = groupCm.ToList()[1].Home;
             var team12 = groupCm.ToList()[1].Away;
-            var groupCteams = new List<Team>
-            {
-                team9,
-                team10,
-                team11,
-                team12
-            };
-            var standingsC = standings.CalculatingTable(groupCm, groupCteams);
+            var groupCteams = new List<Team> { team9, team10, team11, team12 };
+                var standingsC = standings.CalculatingTable(groupCm, groupCteams);
             var groupC = new TournamentGroup()
             {
                 Name = "C",
@@ -91,14 +147,8 @@ namespace MySoccerWorld.Models.Services
             var team14 = groupDm.ToList()[0].Away;
             var team15 = groupDm.ToList()[1].Home;
             var team16 = groupDm.ToList()[1].Away;
-            var groupDteams = new List<Team>
-            {
-                team13,
-                team14,
-                team15,
-                team16
-            };
-            var standingsD = standings.CalculatingTable(groupDm, groupDteams);
+            var groupDteams = new List<Team> { team13, team14, team15, team16 };
+                var standingsD = standings.CalculatingTable(groupDm, groupDteams);
             var groupD = new TournamentGroup()
             {
                 Name = "D",
@@ -114,14 +164,8 @@ namespace MySoccerWorld.Models.Services
             var team18 = groupEm.ToList()[0].Away;
             var team19 = groupEm.ToList()[1].Home;
             var team20 = groupEm.ToList()[1].Away;
-            var groupEteams = new List<Team>
-            {
-                team17,
-                team18,
-                team19,
-                team20
-            };
-            var standingsE = standings.CalculatingTable(groupEm, groupEteams);
+            var groupEteams = new List<Team> { team17, team18, team19, team20 };
+                var standingsE = standings.CalculatingTable(groupEm, groupEteams);
             var groupE = new TournamentGroup()
             {
                 Name = "E",
@@ -137,14 +181,8 @@ namespace MySoccerWorld.Models.Services
             var team22 = groupFm.ToList()[0].Away;
             var team23 = groupFm.ToList()[1].Home;
             var team24 = groupFm.ToList()[1].Away;
-            var groupFteams = new List<Team>
-            {
-                team21,
-                team22,
-                team23,
-                team24
-            };
-            var standingsF = standings.CalculatingTable(groupFm, groupFteams);
+            var groupFteams = new List<Team> { team21, team22, team23, team24 };
+                var standingsF = standings.CalculatingTable(groupFm, groupFteams);
             var groupF = new TournamentGroup()
             {
                 Name = "F",
@@ -160,14 +198,8 @@ namespace MySoccerWorld.Models.Services
             var team26 = groupGm.ToList()[0].Away;
             var team27 = groupGm.ToList()[5].Home;
             var team28 = groupGm.ToList()[5].Away;
-            var groupGteams = new List<Team>
-            {
-                team25,
-                team26,
-                team27,
-                team28
-            };
-            var standingsG = standings.CalculatingTable(groupGm, groupGteams);
+            var groupGteams = new List<Team> { team25, team26, team27, team28 };
+                var standingsG = standings.CalculatingTable(groupGm, groupGteams);
             var groupG = new TournamentGroup()
             {
                 Name = "G",
@@ -183,14 +215,8 @@ namespace MySoccerWorld.Models.Services
             var team30 = groupHm.ToList()[0].Away;
             var team31 = groupHm.ToList()[1].Home;
             var team32 = groupHm.ToList()[1].Away;
-            var groupHteams = new List<Team>
-            {
-                team29,
-                team30,
-                team31,
-                team32
-            };
-            var standingsH = standings.CalculatingTable(groupHm, groupHteams);
+            var groupHteams = new List<Team> { team29, team30, team31, team32 };
+                var standingsH = standings.CalculatingTable(groupHm, groupHteams);
             var groupH = new TournamentGroup()
             {
                 Name = "H",
@@ -202,7 +228,9 @@ namespace MySoccerWorld.Models.Services
                                                          .ThenByDescending(c => c.GoalsFor)
             };
             var groups = new List<TournamentGroup>() { groupA, groupB, groupC, groupD, groupE, groupF, groupG, groupH };
-            return groups;
+                return groups;
+            }
+            
         }
         public List<TournamentGroup> Group2(Tournament tournament)
         {
@@ -212,13 +240,7 @@ namespace MySoccerWorld.Models.Services
             var team2 = groupAm.ToList()[0].Away;
             var team3 = groupAm.ToList()[1].Home;
             var team4 = groupAm.ToList()[1].Away;
-            var groupAteams = new List<Team>
-            {
-                team1,
-                team2,
-                team3,
-                team4
-            };
+            var groupAteams = new List<Team> { team1, team2, team3, team4 };
             var standingsA = standings.CalculatingTable(groupAm, groupAteams);
             var groupA = new TournamentGroup()
             {
@@ -235,13 +257,7 @@ namespace MySoccerWorld.Models.Services
             var team6 = groupBm.ToList()[0].Away;
             var team7 = groupBm.ToList()[1].Home;
             var team8 = groupBm.ToList()[1].Away;
-            var groupBteams = new List<Team>
-            {
-                team5,
-                team6,
-                team7,
-                team8
-            };
+            var groupBteams = new List<Team> { team5, team6, team7, team8 };
             var standingsB = standings.CalculatingTable(groupBm, groupBteams);
             var groupB = new TournamentGroup()
             {
@@ -265,14 +281,7 @@ namespace MySoccerWorld.Models.Services
             var team3 = groupAm.ToList()[1].Home;
             var team4 = groupAm.ToList()[1].Away;
             var team5 = groupAm.ToList()[2].Home;
-            var groupAteams = new List<Team>
-            {
-                team1,
-                team2,
-                team3,
-                team4,
-                team5
-            };
+            var groupAteams = new List<Team> { team1, team2, team3, team4, team5 };
             var standingsA = standings.CalculatingTable(groupAm, groupAteams);
             var groupA = new TournamentGroup()
             {
@@ -290,14 +299,7 @@ namespace MySoccerWorld.Models.Services
             var team8 = groupBm.ToList()[1].Home;
             var team9 = groupBm.ToList()[1].Away;
             var team10 = groupBm.ToList()[2].Home;
-            var groupBteams = new List<Team>
-            {
-                team6,
-                team7,
-                team8,
-                team9,
-                team10
-            };
+            var groupBteams = new List<Team> { team6, team7, team8, team9, team10 };
             var standingsB = standings.CalculatingTable(groupBm, groupBteams);
             var groupB = new TournamentGroup()
             {
@@ -315,14 +317,7 @@ namespace MySoccerWorld.Models.Services
             var team13 = groupCm.ToList()[1].Home;
             var team14 = groupCm.ToList()[1].Away;
             var team15 = groupCm.ToList()[2].Home;
-            var groupCteams = new List<Team>
-            {
-                team11,
-                team12,
-                team13,
-                team14,
-                team15
-            };
+            var groupCteams = new List<Team> { team11, team12, team13, team14,team15 };
             var standingsC = standings.CalculatingTable(groupCm, groupCteams);
             var groupC = new TournamentGroup()
             {
@@ -340,14 +335,7 @@ namespace MySoccerWorld.Models.Services
             var team18 = groupDm.ToList()[1].Home;
             var team19 = groupDm.ToList()[1].Away;
             var team20 = groupDm.ToList()[2].Home;
-            var groupDteams = new List<Team>
-            {
-                team16,
-                team17,
-                team18,
-                team19,
-                team20
-            };
+            var groupDteams = new List<Team> { team16, team17, team18, team19, team20 };
             var standingsD = standings.CalculatingTable(groupDm, groupDteams);
             var groupD = new TournamentGroup()
             {

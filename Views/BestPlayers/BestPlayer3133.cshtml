@@ -1,84 +1,40 @@
-﻿@model IEnumerable<BestPlayer>
-
-<div>
-    @{
-        var p1 = Model.Where(p => p.Position == 1).Single();
-        var p2 = Model.Where(p => p.Position == 2).Single();
-        var p3 = Model.Where(p => p.Position == 3).Single();
-        var p4 = Model.Where(p => p.Position == 4).Single();
-        var p5 = Model.Where(p => p.Position == 5).Single();
-        var p6 = Model.Where(p => p.Position == 6).Single();
-        var p7 = Model.Where(p => p.Position == 7).Single();
-        var p8 = Model.Where(p => p.Position == 8).Single();
-        var p9 = Model.Where(p => p.Position == 9).Single();
-        var p10 = Model.Where(p => p.Position == 10).Single();
-        var p11 = Model.Where(p => p.Position == 11).Single();
-
-    }
-</div>
-<div class="container mt-5" style="background:url(/images/Field.jpg) no-repeat;background-size:cover;width:830px;height:530px;">
-    <div class="row bprow" style="height:50px;">
+﻿@model List<BestPlayer>
+<div class="container mt-5" id="bestplayer">
+    <div class="row bprow">
         <div class="col-3">
-            <p class="bestplayer" style=" background-color: darkgreen; color: aliceblue; border-color: darkcyan;">
-                @p1.PlayerTeam.Player.Name
-            </p> <p class="bpclub"> @p1.PlayerTeam.Team.Name</p>
+            <p class="bestplayer gk">
+                @Model[0].PlayerTeam.Player.Name
+            </p> <p class="bpclub"> @Model[0].PlayerTeam.Team.Name</p>
         </div>
     </div>
-    <div class="row bprow" style="height:50px;">
+    <div class="row bprow">
     </div>
-    <div class="row bprow" style="height:50px;">
-        <div class="col-3"> <p class="bestplayer">@p2.PlayerTeam.Player.Name</p> <p class="bpclub"> @p2.PlayerTeam.Team.Name </p> </div>
-        <div class="col-3"> <p class="bestplayer">@p3.PlayerTeam.Player.Name</p> <p class="bpclub">@p3.PlayerTeam.Team.Name</p> </div>
-        <div class="col-3"> <p class="bestplayer">@p4.PlayerTeam.Player.Name</p> <p class="bpclub"> @p4.PlayerTeam.Team.Name</p> </div>
+    <div class="row bprow">
+        <div class="col-3"> <p class="bestplayer">@Model[1].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[1].PlayerTeam.Team.Name </p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[2].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[2].PlayerTeam.Team.Name</p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[3].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[3].PlayerTeam.Team.Name</p> </div>
     </div>
-    <div class="row bprow" style="height:50px;">
+    <div class="row bprow">
     </div>
-    <div class="row bprow" style="height:50px;">
-        <div class="col-3"> <p class="bestplayer">@p5.PlayerTeam.Player.Name</p> <p class="bpclub">@p5.PlayerTeam.Team.Name</p> </div>
-        
-    </div>
-    <div class="row bprow" style="height:50px;">
-    </div>
-    <div class="row bprow" style="height:50px;">
-        <div class="col-3"> <p class="bestplayer">@p6.PlayerTeam.Player.Name</p> <p class="bpclub"> @p6.PlayerTeam.Team.Name</p> </div>
-        <div class="col-3"> <p class="bestplayer">@p7.PlayerTeam.Player.Name</p> <p class="bpclub"> @p7.PlayerTeam.Team.Name</p> </div>
-        <div class="col-3"> <p class="bestplayer">@p8.PlayerTeam.Player.Name</p> <p class="bpclub"> @p8.PlayerTeam.Team.Name</p> </div>
+    <div class="row bprow">
+        <div class="col-3"> <p class="bestplayer">@Model[4].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[4].PlayerTeam.Team.Name</p> </div>
 
     </div>
-    <div class="row bprow" style="height:50px;">
+    <div class="row bprow">
     </div>
-    <div class="row bprow" style="height:50px;">
-        <div class="col-3"> <p class="bestplayer">@p9.PlayerTeam.Player.Name</p> <p class="bpclub">@p9.PlayerTeam.Team.Name</p> </div>
-        <div class="col-3"> <p class="bestplayer">@p10.PlayerTeam.Player.Name</p> <p class="bpclub">@p10.PlayerTeam.Team.Name</p> </div>
-        <div class="col-3"> <p class="bestplayer">@p11.PlayerTeam.Player.Name</p> <p class="bpclub"> @p11.PlayerTeam.Team.Name</p> </div>
+    <div class="row bprow">
+        <div class="col-3"> <p class="bestplayer">@Model[5].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[5].PlayerTeam.Team.Name</p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[6].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[6].PlayerTeam.Team.Name</p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[7].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[7].PlayerTeam.Team.Name</p> </div>
+
     </div>
-    <div class="row bprow" style="height:50px;">
+    <div class="row bprow">
+    </div>
+    <div class="row bprow">
+        <div class="col-3"> <p class="bestplayer">@Model[8].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[8].PlayerTeam.Team.Name</p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[9].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[9].PlayerTeam.Team.Name</p> </div>
+        <div class="col-3"> <p class="bestplayer">@Model[10].PlayerTeam.Player.Name</p> <p class="bpclub"> @Model[10].PlayerTeam.Team.Name</p> </div>
+    </div>
+    <div class="row bprow">
     </div>
 </div>
-<style>
-    .bestplayer {
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        border: solid;
-        border-color: darkolivegreen;
-        background-color: #90ee9094;
-    }
-
-    .bpclub {
-        font-size: 12px;
-        display: flex;
-        justify-content: center;
-        color: darkviolet;
-        text-transform: uppercase;
-        font-weight: bolder;
-    }
-
-    .bprow {
-        justify-content: space-around;
-    }
-
-    p {
-        margin: 0;
-    }
-</style>

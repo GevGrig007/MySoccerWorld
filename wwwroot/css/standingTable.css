@@ -155,3 +155,37 @@ h1 {
     color:aliceblue;
     background-color:blue;
 }
+.bestplayer {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border: solid;
+    border-color: darkolivegreen;
+    background-color: #90ee9094;
+}
+.bpclub {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    color: darkviolet;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+.bprow {
+    justify-content: space-around;
+    height: 50px;
+}
+#bestplayer {
+    background: url(/images/Field.jpg) no-repeat;
+    background-size: cover;
+    width: 830px;
+    height: 530px;
+}
+#bestplayer p {
+    margin :0;
+}
+.gk {
+    background-color: darkgreen;
+    color: aliceblue;
+    border-color: darkcyan;
+}

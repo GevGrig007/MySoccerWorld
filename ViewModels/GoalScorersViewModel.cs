@@ -10,5 +10,6 @@ namespace MySoccerWorld.ViewModels
     {
         public Tournament Tournament { get; set; }
         public IEnumerable<PlayerTeam> PlayerTeams { get; set; }
+        public IEnumerable<TournamentAward> TournamentAwards { get; set; }
     }
 }

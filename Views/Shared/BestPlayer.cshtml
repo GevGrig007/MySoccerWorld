@@ -1,5 +1,5 @@
 ﻿@model Tournament
-<div>
+<div class="center">
     <form asp-action="EditBP" asp-controller="Tournaments" method="post">
         <input type="hidden" name="id" value="@Model.Id" />
         <select name="bp" asp-items="Html.GetEnumSelectList<BPSchema>()">
@@ -8,33 +8,6 @@
         <input type="submit" value="apply" />
     </form>
 </div>
-<style>
-    .bestplayer {
-        justify-content: center;
-        display: flex;
-        align-items: center;
-        border: solid;
-        border-color: darkolivegreen;
-        background-color: #90ee9094;
-    }
-
-    .bpclub {
-        font-size: 12px;
-        display: flex;
-        justify-content: center;
-        color: darkviolet;
-        text-transform: uppercase;
-        font-weight: bolder;
-    }
-
-    .bprow {
-        justify-content: space-around;
-    }
-
-    p {
-        margin: 0;
-    }
-</style>
 @{
     if (Model.BestPlayerSchema == BPSchema.F_31213)
     {

@@ -28,7 +28,7 @@ namespace MySoccerWorld.Models.Entities
         public virtual List<BestPlayer> BestPlayers { get; set; }
         public BPSchema? BestPlayerSchema { get; set; }
         public ICollection<Rating> Ratings { get; set; }
-        public virtual TournamentAward TournamentAward { get; set; }
+        public virtual ICollection<TournamentAward> TournamentAwards { get; set; }
 
         public Tournament()
         {

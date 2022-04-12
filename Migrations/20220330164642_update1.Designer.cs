@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySoccerWorld.Models;
 
 namespace MySoccerWorld.Migrations
 {
     [DbContext(typeof(SoccerContext))]
-    partial class SoccerContextModelSnapshot : ModelSnapshot
+    [Migration("20220330164642_update1")]
+    partial class update1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -451,7 +453,7 @@ namespace MySoccerWorld.Migrations
                     b.Property<int>("AwardsName")
                         .HasColumnType("int");
 
-                    b.Property<int>("CoachTeamId")
+                    b.Property<int?>("BestCoachId")
                         .HasColumnType("int");
 
                     b.Property<int>("PlayerTeamId")
@@ -462,7 +464,7 @@ namespace MySoccerWorld.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoachTeamId");
+                    b.HasIndex("BestCoachId");
 
                     b.HasIndex("PlayerTeamId");
 
@@ -729,9 +731,7 @@ namespace MySoccerWorld.Migrations
                 {
                     b.HasOne("MySoccerWorld.Models.Entities.CoachTeam", "BestCoach")
                         .WithMany("TournamentAwards")
-                        .HasForeignKey("CoachTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BestCoachId");
 
                     b.HasOne("MySoccerWorld.Models.Entities.PlayerTeam", "PlayerTeam")
                         .WithMany("TournamentAwards")

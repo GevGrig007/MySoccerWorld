@@ -59,5 +59,6 @@ namespace MySoccerWorld.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index", "Shedulles", new { id = bestPlayer.TournamentId });
         }
+
     }
 }

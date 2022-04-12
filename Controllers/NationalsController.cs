@@ -69,20 +69,21 @@ namespace MySoccerWorld.Controllers
         [HttpPost]
         public IActionResult CreatePlayer(National national, int[] selectedPlayers)
         {
-            Team newNational = db.Teams.Include(n => n.PlayerTeams).FirstOrDefault(n => n.Id == national.Id);
+            Team newNational = db.Teams.Include(n => n.PlayerTeams).ThenInclude(p=>p.Player).FirstOrDefault(n => n.Id == national.Id);
             newNational.Name = national.Name;
-            //newNational.PlayerTeams.Clear();
             if (selectedPlayers != null)
             {
-                foreach (var c in db.Players.Where(c => selectedPlayers.Contains(c.Id)))
+                foreach (var c in db.Players.Include(c=>c.PlayerTeams).Where(c => selectedPlayers.Contains(c.Id)))
                 {
-                    PlayerTeam playerTeams = new() { Player = c, Team = national };
-                    newNational.PlayerTeams.Add(playerTeams);
+                    if (c.PlayerTeams.Any(c => c.Team == newNational)) { } 
+                    else {
+                        PlayerTeam playerTeams = new() { PlayerId =c.Id, TeamId = national.Id };
+                        db.Add(playerTeams);
+                    }           
                 }
             }
-            db.Entry(newNational).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = newNational.Id });
+            return RedirectToAction("Details", new { id = newNational.Id });
         }
         public IActionResult CreateNational()
         {
