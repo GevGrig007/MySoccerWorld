@@ -18,7 +18,7 @@
              <img src="https://github.com/GevGrig007/MySoccerWorld/blob/master/wwwroot/images/readme/regional.png"  widht="100" height="100"/>
         </div>
 </div>
-<div>
+<div align="center">
      <p align="center">
         Detailed collection of statistics for season and all-time
     </p>
