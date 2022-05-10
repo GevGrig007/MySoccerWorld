@@ -14,41 +14,41 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
 #line 1 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld;
+using MySoccerWorld.Model.Entities;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models;
+using MySoccerWorld.Model.Enums;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models.Entities;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
 using MySoccerWorld.ViewModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
+#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.Model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 5 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"99322b0749bb691051b23bba580b06942a482d6a", @"/Views/Shedulles/AddTeams.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27b41d72e309e687d740d9d0d2ac34708a534e9b", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9ff5490c79fad3a972f5b6a0ec8d739c7ff68661", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Shedulles_AddTeams : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Tournament>
     #nullable disable
@@ -89,7 +89,7 @@ using MySoccerWorld.Models.Services;
 #line hidden
 #nullable disable
             WriteLiteral("<div class=\"modal-content\">\r\n    <div class=\"modal-header\">\r\n        <button class=\"close\" data-dismiss=\"modal\" area-hidden=\"true\">X</button>\r\n    </div>\r\n    <div class=\"modal-body p-0\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99322b0749bb691051b23bba580b06942a482d6a4912", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99322b0749bb691051b23bba580b06942a482d6a4913", async() => {
                 WriteLiteral("\r\n            <h3 class=\"d-flex justify-content-center\" style=\"background-color:brown;color:antiquewhite;padding:5px;\"> Select Teams </h3>\r\n            ");
 #nullable restore
 #line 12 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\Shedulles\AddTeams.cshtml"

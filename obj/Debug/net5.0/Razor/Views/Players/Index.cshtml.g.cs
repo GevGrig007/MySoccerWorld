@@ -14,41 +14,41 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
 #line 1 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld;
+using MySoccerWorld.Model.Entities;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models;
+using MySoccerWorld.Model.Enums;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models.Entities;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
 using MySoccerWorld.ViewModels;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
+#line 4 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
+using MySoccerWorld.Model;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 5 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\_ViewImports.cshtml"
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"52e8ad8d909928a07a77efcb682ff00abcf17dbe", @"/Views/Players/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27b41d72e309e687d740d9d0d2ac34708a534e9b", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9ff5490c79fad3a972f5b6a0ec8d739c7ff68661", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Players_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<Player>>
     #nullable disable
@@ -105,7 +105,7 @@ Write(await Html.PartialAsync("MenuHeader"));
 #line hidden
 #nullable disable
             WriteLiteral("\r\n<div class=\"container\">\r\n    <p>\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe7991", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe7992", async() => {
                 WriteLiteral("Create New");
             }
             );
@@ -122,7 +122,7 @@ Write(await Html.PartialAsync("MenuHeader"));
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n    </p>\r\n    <div class=\"mainsection\">\r\n        <table class=\"table tb mainrow\">\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe9425", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe9426", async() => {
                 WriteLiteral("\r\n                            NAME\r\n                        ");
             }
             );
@@ -162,7 +162,7 @@ Write(await Html.PartialAsync("MenuHeader"));
 #line hidden
 #nullable disable
             WriteLiteral("                    <tr>\r\n                        <td class=\"club\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe12313", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe12314", async() => {
                 WriteLiteral("  ");
 #nullable restore
 #line 31 "C:\Users\GevorgGrigoryan\Desktop\Projects\MySoccerWorld\Views\Players\Index.cshtml"
@@ -271,7 +271,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
 #line hidden
 #nullable disable
             WriteLiteral("                        </td>\r\n                        <td>\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe17858", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe17859", async() => {
                 WriteLiteral("Edit");
             }
             );
@@ -303,7 +303,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe20159", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe20160", async() => {
                 WriteLiteral("Delete");
             }
             );
@@ -335,7 +335,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe22464", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe22465", async() => {
                 WriteLiteral(" TRANSFER ");
             }
             );
@@ -375,7 +375,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
 #line hidden
 #nullable disable
             WriteLiteral("            </tbody>\r\n        </table>\r\n    </div>\r\n</div>\r\n<div id=\"modDialog\" class=\"modal fade\" style=\"top:5%\">\r\n    <div id=\"dialogContent\" class=\"modal-dialog\"></div>\r\n</div>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe25217", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe25218", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -389,7 +389,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe26257", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe26258", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -403,7 +403,7 @@ WriteAttributeValue("", 1504, player.PlayerTeams.LastOrDefault().Team.Flag, 1504
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe27297", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52e8ad8d909928a07a77efcb682ff00abcf17dbe27298", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

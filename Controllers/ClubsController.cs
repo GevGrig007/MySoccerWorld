@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model.Entities;
 using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Services;
 using MySoccerWorld.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,15 +15,17 @@ namespace MySoccerWorld.Controllers
     public class ClubsController : Controller
     {
         private readonly ILogger<ClubsController> _logger;
-        private readonly SoccerContext db;
-        public ClubsController(ILogger<ClubsController> logger, SoccerContext context)
+        private readonly IClubService _serv;
+        private readonly IDataManager db;
+        public ClubsController(ILogger<ClubsController> logger, IClubService serv, IDataManager context)
         {
             _logger = logger;
+            _serv = serv;
             db = context;
         }
         public async Task<IActionResult> Index(ClubsSort sortType = ClubsSort.ClubId)
         {
-            IQueryable<Club> clubs = db.Clubs.Include(c => c.Country).Include(c => c.CoachTeams).ThenInclude(c => c.Coach);
+            IQueryable<Club> clubs = db.Clubs.ClubSort();
             ViewData["NameSort"] = sortType == ClubsSort.NameAsc ? ClubsSort.NameDesc : ClubsSort.NameAsc;
             ViewData["CountrySort"] = sortType == ClubsSort.CountryAsc ? ClubsSort.CountryDesc : ClubsSort.CountryAsc;
             clubs = sortType switch
@@ -37,49 +38,32 @@ namespace MySoccerWorld.Controllers
             };
             return View(await clubs.AsNoTracking().ToListAsync());
         }
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            var players = await db.Players.Include(p => p.Country).Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player).ToListAsync();
-            var clubPlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == id).ToList();
-            var club = await db.Clubs.Include(c => c.Ratings).ThenInclude(r => r.Tournament).ThenInclude(t => t.Season)
-                                                           .Include(c => c.Country)
-                                                           .Include(c => c.PlayerTeams).ThenInclude(p => p.Team)
-                                                           .Include(c => c.CoachTeams).ThenInclude(c => c.Team).FirstOrDefaultAsync(c => c.Id == id);
-            var matches = db.Matches.Include(m => m.Tournament).Include(m => m.Home).Include(m => m.Away)
-                                           .Include(m => m.Goals).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Include(m => m.Asists).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Where(m => m.HomeTeam == id || m.AwayTeam == id).ToList();
-            var stats = new ClubStats(club, matches);
+            var matches = db.Matches.GetByTeam(id);
+            var club = db.Clubs.Get(id);
             var clubView = new ClubViewModel()
             {
-                Team = club,
-                Matches = matches,
-                Players = clubPlayers,
-                Stats = stats,
+                Team = db.Clubs.Details(id),
+                Matches = matches.ToList(),
+                Players = db.Clubs.Players(id),
+                Stats = _serv.Stats(club, matches.ToList()),
                 Ratings = club.Ratings.OrderBy(t => t.Tournament.LeagueId)
             };
             return View(clubView);
         }
-        public async Task<IActionResult> ClubMatches(int id)
+        public IActionResult CreateClub()
         {
-            var matches = await db.Matches.Include(m => m.Tournament).Include(m => m.Home).Include(m => m.Away)
-                                           .Include(m => m.Goals).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Include(m => m.Asists).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Where(m => m.HomeTeam == id || m.AwayTeam == id).OrderBy(m => m.Data).ToListAsync();
-            return View(matches);
-        }
-        public IActionResult CreateClub ()
-        {
-            ViewBag.Country = new SelectList(db.Countries, "Id", "Name");
+            ViewBag.Country = new SelectList(db.Clubs.Countries(), "Id", "Name");
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateClub([Bind("Name,Country,Flag")] Club club)
+        public IActionResult CreateClub([Bind("Name,Country,Flag")] Club club)
         {
             if (ModelState.IsValid)
             {
-                db.Add(club);
-                await db.SaveChangesAsync();
+                db.Clubs.Update(club);
+                db.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(club);

@@ -57,10 +57,25 @@
                 <div class="center mainname">
                     PLAYERS
                 </div>
-                @foreach (var p in Model.Players)
-                {
-                    <div class="d-flex justify-content-center"> @p.Name </div>
-                }
+                <div class="p-5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th> G </th>
+                                <th> A </th>
+                            </tr>
+                        </thead>
+                        @foreach (var p in Model.Players)
+                        {
+                            <tr>
+                                <td> @p.Name </td>
+                                <td> @p.PlayerTeams.FirstOrDefault().Goals.Count() </td>
+                                <td> @p.PlayerTeams.FirstOrDefault().Asists.Count() </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
             <div class="center">
                 <a asp-action="CreatePlayer" asp-controller="Nationals" asp-route-id="@Model.Team.Id" class="modalItem btn btn-primary"> ADD PLAYERS </a>

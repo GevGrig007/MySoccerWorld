@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model.Entities;
+using MySoccerWorld.Model.Enums;
+using MySoccerWorld.Services;
 using MySoccerWorld.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,63 +15,53 @@ namespace MySoccerWorld.Controllers
     public class TournamentsController : Controller
     {
         private readonly ILogger<TournamentsController> _logger;
-        private readonly SoccerContext db;
-        public TournamentsController(ILogger<TournamentsController> logger, SoccerContext context)
+        private readonly IDataManager db;
+        private readonly ITournamentService _serv;
+        public TournamentsController(ILogger<TournamentsController> logger, IDataManager context, ITournamentService service)
         {
             _logger = logger;
             db = context;
+            _serv = service;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var leagues = await db.Leagues.ToListAsync();
+            var leagues = db.Leagues.GetAll();
             return View(leagues);
         }
-        public async Task<IActionResult> OnlyRegional()
+        public IActionResult OnlyRegional()
         {
-            var leagues = await db.Leagues.Where(l => l.Type == "Regional").ToListAsync();
+            var leagues = db.Leagues.GetAll().Where(l => l.Type == "Regional").ToList();
             return View("Index", leagues);
         }
-        public async Task<IActionResult> OnlyEuroCups()
+        public IActionResult OnlyEuroCups()
         {
-            var leagues = await db.Leagues.Where(l => l.Type == "EuroCup").ToListAsync();
+            var leagues =  db.Leagues.GetAll().Where(l => l.Type == "EuroCup").ToList();
             return View("Index", leagues);
         }
-        public async Task<IActionResult> OnlyNational()
+        public IActionResult OnlyNational()
         {
-            var leagues = await db.Leagues.Where(l => l.Type == "National").ToListAsync();
+            var leagues =  db.Leagues.GetAll().Where(l => l.Type == "National").ToList();
             return View("Index", leagues);
         }
         // Details
-        public async Task<IActionResult> RegionalDetails(int id)
+        public IActionResult RegionalDetails(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams.OrderBy(p => p.Season))
-                .Include(t => t.Season)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .ToListAsync();
-            var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToListAsync();
-            if (matches.Count > 0)
+            var tournament = db.Tournaments.Details(id);
+            var matches =  db.Matches.GetByTournament(id);
+            if (matches.Count() > 0)
             {
-                var standings = new Standings();
-                var tournamentStandings = standings.CalculatingTable(tournament.Matches, tournament.Teams);
+                var standings = _serv.CalculatingTable(matches, tournament.Teams);
                 var tournamentView = new TournamentViewModel()
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = matches,
-                    Goals = goalscorers,
-                    Asists = asisters,
-                    BestPlayer = bestplayers,
-                    TournamentStandings = tournamentStandings.OrderByDescending(c => c.Points)
-                                                             .ThenByDescending(c => c.GoalDifference)
-                                                             .ThenByDescending(c => c.GoalsFor)
+                    Matches = matches.ToList(),
+                    Goals = db.PlayerTeams.GoalScorers(id),
+                    Asists = db.PlayerTeams.Asisters(id),
+                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    TournamentStandings = standings.OrderByDescending(c => c.Points)
+                                                   .ThenByDescending(c => c.GoalDifference)
+                                                   .ThenByDescending(c => c.GoalsFor)
                 };
                 return View(tournamentView);
             }
@@ -80,39 +69,26 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                Matches = matches,
-                BestPlayer = bestplayers
+                Matches = matches.ToList(),
+                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
             };
             return View(emptyTournamnet);
         }
-        public async Task<IActionResult> EuroCupDetails(int id)
+        public IActionResult EuroCupDetails(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .ToListAsync();
-            var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToListAsync();
-            var groups = new TournamentGroup();
-            if (matches.Count > 0)
+            var tournament = db.Tournaments.Details(id);
+            var matches = db.Matches.GetByTournament(id);
+            if (matches.Any())
             {
-                var tournamentsGroup = groups.Group8(tournament);
                 var tournamentView = new EuroCupViewModel()
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = matches,
-                    Goals = goalscorers,
-                    Asists = asisters,
-                    BestPlayer = bestplayers,
-                    Groups = tournamentsGroup
+                    Matches = matches.ToList(),
+                    Goals = db.PlayerTeams.GoalScorers(id),
+                    Asists = db.PlayerTeams.Asisters(id),
+                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    Groups = _serv.Group8(tournament)
                 };
                 return View(tournamentView);
             };
@@ -120,67 +96,41 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                Matches = matches,
-                BestPlayer = bestplayers
+                Matches = matches.ToList(),
+                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
             };
             return View(emptyTournamnet);
         }
-        public async Task<IActionResult> EuroCupKnockOut(int id)
+        public IActionResult EuroCupKnockOut(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .ToListAsync();
-            var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToList();
+            var tournament = db.Tournaments.Details(id);
+            var matches = db.Matches.GetByTournament(id);
             var tournamentView = new KnockOutViewModel()
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                Matches = matches,
-                Goals = goalscorers,
-
-                Asists = asisters,
-                BestPlayer = bestplayers
+                Matches = matches.ToList(),
+                Goals = db.PlayerTeams.GoalScorers(id),
+                Asists = db.PlayerTeams.Asisters(id),
+                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
             };
             return View(tournamentView);
         }
-        public async Task<IActionResult> NationalDetails(int id)
+        public IActionResult NationalDetails(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .ToListAsync();
-            //var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var goalscorers = db.PlayerTeams.Where(p=>p.Goals.Where(g=>g.Match.TournamentId==id).Count()>0).Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToList();
-            var groups = new TournamentGroup();
-            if (matches.Count > 0)
+            var tournament = db.Tournaments.Details(id);
+            var matches = db.Matches.GetByTournament(id);
+            if (matches.Any())
             {
-                var tournamentsGroup = groups.Group2(tournament);
                 var tournamentView = new EuroCupViewModel()
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = matches,
-                    Goals = goalscorers,
-                    Asists = asisters,
-                    BestPlayer = bestplayers,
-                    Groups = tournamentsGroup
+                    Matches = matches.ToList(),
+                    Goals = db.PlayerTeams.GoalScorers(id),
+                    Asists = db.PlayerTeams.Asisters(id),
+                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    Groups = _serv.Group2(tournament)
                 };
                 return View(tournamentView);
             };
@@ -188,39 +138,26 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                BestPlayer = bestplayers,
-                Matches = matches
+                Matches = matches.ToList(),
+                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
             };
             return View(emptyTournamnet);
         }
-        public async Task<IActionResult> NationalEuro(int id)
+        public IActionResult NationalEuro(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            var matches = await db.Matches.Where(x => x.TournamentId == id).Include(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .Include(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                                          .ToListAsync();
-            var goalscorers = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-            var asisters = db.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
-            var bestplayers = db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToList();
-            var groups = new TournamentGroup();
-            if (matches.Count > 0)
+            var tournament = db.Tournaments.Details(id);
+            var matches = db.Matches.GetByTournament(id);
+            if (matches.Any())
             {
-                var tournamentsGroup = groups.EuroGroup(tournament);
                 var tournamentView = new EuroCupViewModel()
                 {
                     Tournament = tournament,
                     Teams = tournament.Teams.ToList(),
-                    Matches = matches,
-                    Goals = goalscorers,
-                    Asists = asisters,
-                    BestPlayer = bestplayers,
-                    Groups = tournamentsGroup
+                    Matches = matches.ToList(),
+                    Goals = db.PlayerTeams.GoalScorers(id),
+                    Asists = db.PlayerTeams.Asisters(id),
+                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    Groups = _serv.EuroGroup(tournament)
                 };
                 return View(tournamentView);
             };
@@ -228,68 +165,60 @@ namespace MySoccerWorld.Controllers
             {
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
-                BestPlayer = bestplayers,
-                Matches = matches
+                Matches = matches.ToList(),
+                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
             };
             return View(emptyTournamnet);
         }
-        public async Task<IActionResult> Qualification(int id)
+        public IActionResult Qualification(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .FirstOrDefaultAsync(x => x.Id == id);
             var view = new QualificationViewModel()
             {
-                Tournament = tournament,
-                Matches = tournament.Matches.ToList()
+                Tournament = db.Tournaments.Details(id),
+                Matches = db.Matches.GetByTournament(id).ToList()
             };
             return View(view);
         }
         // CRUD Tournaments 
-        public async Task<IActionResult> TournamentManage(int id)
+        public IActionResult TournamentManage(int id)
         {
-            var tournaments = await db.Tournaments.Include(t => t.Season).Where(t => t.LeagueId == id).ToListAsync();
-            ViewBag.Leagues = new SelectList(db.Leagues, "Id", "Name");
-            ViewBag.Seasons = new SelectList(db.Seasons.OrderByDescending(s=>s.Data), "Id", "Data");
+            var tournaments = db.Tournaments.GetByLeague(id);
+            ViewBag.Leagues = new SelectList(db.Leagues.GetAll(), "Id", "Name");
+            ViewBag.Seasons = new SelectList(db.Seasons.GetAll().OrderByDescending(s => s.Data), "Id", "Data");
             return View(tournaments);
         }
         [HttpPost]
         public IActionResult Create(Tournament tournament)
         {
-            ViewBag.Leagues = new SelectList(db.Leagues, "Id", "Name", tournament.LeagueId);
-            ViewBag.Seasons = new SelectList(db.Seasons, "Id", "Data", tournament.SeasonId);
-            db.Update(tournament);
-            db.SaveChanges();
+            ViewBag.Leagues = new SelectList(db.Leagues.GetAll(), "Id", "Name", tournament.LeagueId);
+            ViewBag.Seasons = new SelectList(db.Seasons.GetAll(), "Id", "Data", tournament.SeasonId);
+            db.Tournaments.Update(tournament);
+            db.Save();
             return RedirectToAction("TournamentManage", "Tournaments", new { id = tournament.LeagueId });
         }
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var tournament = await db.Tournaments.Include(t => t.Season).Include(t => t.League).FirstOrDefaultAsync(t => t.Id == id);
-            ViewBag.Leagues = new SelectList(db.Leagues, "Id", "Name");
-            ViewBag.Seasons = new SelectList(db.Seasons, "Id", "Data");
+            var tournament =  db.Tournaments.Get(id);
+            ViewBag.Leagues = new SelectList(db.Leagues.GetAll(), "Id", "Name");
+            ViewBag.Seasons = new SelectList(db.Seasons.GetAll(), "Id", "Data");
             return PartialView(tournament);
         }
         [HttpPost]
         public IActionResult Edit(Tournament tournament)
         {
-            ViewBag.Leagues = new SelectList(db.Leagues, "Id", "Name", tournament.LeagueId);
-            ViewBag.Seasons = new SelectList(db.Seasons, "Id", "Data", tournament.SeasonId);
-            db.Update(tournament);
-            db.SaveChanges();
+            ViewBag.Leagues = new SelectList(db.Leagues.GetAll(), "Id", "Name", tournament.LeagueId);
+            ViewBag.Seasons = new SelectList(db.Seasons.GetAll(), "Id", "Data", tournament.SeasonId);
+            db.Tournaments.Update(tournament);
+            db.Save();
             return RedirectToAction("TournamentManage", "Tournaments", new { id = tournament.LeagueId });
         }
         [HttpPost]
-        public IActionResult EditBP(int id, BPSchema bp)
+        public IActionResult EditBP(int id, BestPlayerFormation bp)
         {
-            var tournament = db.Tournaments.Find(id);
-            tournament.BestPlayerSchema = bp;
-            db.Update(tournament);
-            db.SaveChanges();
+            var tournament = db.Tournaments.Get(id);
+            tournament.BestPlayerFormation = bp;
+            db.Tournaments.Update(tournament);
+            db.Save();
             var link = "";
             if (tournament.TournamentType == TournamentType.Regular)
             {
@@ -317,81 +246,65 @@ namespace MySoccerWorld.Controllers
             }
             return RedirectToAction(link, "Tournaments", new { id = tournament.Id });
         }
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var tournament = await db.Tournaments.Include(t => t.Season).Include(t => t.League).FirstOrDefaultAsync(t => t.Id == id);
+            var tournament = db.Tournaments.Get(id);
             return PartialView(tournament);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirm(Tournament tournament)
         {
-            db.Remove(tournament);
-            db.SaveChanges();
+            db.Tournaments.Delete(tournament.Id);
+            db.Save();
             return RedirectToAction("TournamentManage", "Tournaments", new { id = tournament.LeagueId });
         }
         // Matches
-        public async Task<IActionResult> Matches(int id)
+        public IActionResult Matches(int id)
         {
-            var tournament = await db.Tournaments.Include(t => t.Matches).ThenInclude(m => m.Home)
-                                   .Include(t => t.Matches).ThenInclude(m => m.Away)
-                                   .Include(t => t.Season)
-                                   .FirstOrDefaultAsync(t => t.Id == id);
-            return View(tournament);
+            var matches =  db.Matches.GetByTournament(id);
+            return View(matches);
         }
         // GoalScorers
-        public async Task<IActionResult> GoalScorers(int id)
+        public IActionResult GoalScorers(int id)
         {
-            var tournament = await db.Tournaments.FirstOrDefaultAsync(p => p.Id == id);
-            var players =await db.PlayerTeams.Include(p=>p.Player).Include(p=>p.Team)
-                                             .Include(p=>p.Player).ThenInclude(p=>p.Country)
-                                             .Include(p => p.Goals.Where(g => g.Match.Tournament == tournament))
-                                             .Include(p => p.Asists.Where(g => g.Match.Tournament == tournament)).ToListAsync();
-            var awards = await db.TournamentAwards.Include(a => a.PlayerTeam).ThenInclude(p => p.Player)
-                                                  .Include(a => a.PlayerTeam).ThenInclude(p => p.Team)
-                                                  .Include(a => a.CoachTeam).ThenInclude(p => p.Coach)
-                                                  .Include(a => a.CoachTeam).ThenInclude(p => p.Team)
-                                                  .Where(t => t.TournamentId == id).ToListAsync();
             var view = new GoalScorersViewModel()
             {
-                PlayerTeams = players,
-                Tournament = tournament,
-                TournamentAwards = awards
+                PlayerTeams = db.Goals.GetGoalsByTournament(id),
+                Tournament = db.Tournaments.Get(id),
+                TournamentAwards = db.Awards.GetByTournament(id)
             };
             return View(view);
         }
         public IActionResult CreateAwards(int id)
         {
-            Tournament tournament = db.Tournaments.Find(id);
+            Tournament tournament = db.Tournaments.Get(id);
             ViewBag.Tournament = tournament;
-            ViewBag.Players = new SelectList(db.Players.Include(p => p.PlayerTeams).OrderBy(p => p.Name), "Id", "Name");
-            ViewBag.Coaches = new SelectList(db.Coaches.Include(p => p.CoachTeams).OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Players = new SelectList(db.Players.GetAll().OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Coaches = new SelectList(db.Coaches.GetAll().OrderBy(p => p.Name), "Id", "Name");
             return View();
         }
         [HttpPost]
-        public IActionResult CreateAwards(int TournamentId, int? PlayerTeamId , int? CoachTeamId, AwardsType AwardsName)
+        public IActionResult CreateAwards(int TournamentId, int? PlayerTeamId, int? CoachTeamId, AwardType AwardsName)
         {
             var tournamentaward = new TournamentAward();
             if (PlayerTeamId != null)
             {
-                var player = db.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == PlayerTeamId);
-                var playerTeam = player.PlayerTeams.Where(p => p.Season != null).LastOrDefault();
-                tournamentaward.PlayerTeamId = playerTeam.Id;
+                tournamentaward.PlayerTeamId = db.Awards.GetPlayerAward(PlayerTeamId).Id;
                 tournamentaward.TournamentId = TournamentId;
-                tournamentaward.AwardsName = AwardsName;
-                db.Add(tournamentaward);
-                db.SaveChanges();
+                tournamentaward.AwardName = AwardsName;
+                db.Awards.Update(tournamentaward);
+                db.Save();
             }
-            if(CoachTeamId != null)
+            if (CoachTeamId != null)
             {
-                var coach = db.Coaches.Include(p => p.CoachTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == CoachTeamId);
-                var coachteam = coach.CoachTeams.Where(p => p.Season != null).LastOrDefault();
-                tournamentaward.CoachTeamId = coachteam.Id;
+                var coach = db.Coaches.Get(CoachTeamId);
+                tournamentaward.CoachTeamId = coach.Id;
                 tournamentaward.TournamentId = TournamentId;
-                tournamentaward.AwardsName = AwardsName;
-                db.Add(tournamentaward);
-                db.SaveChanges();
+                tournamentaward.AwardName = AwardsName;
+                db.Awards.Update(tournamentaward);
+                db.Save();
             }
-            return RedirectToAction("GoalScorers",  new { id = TournamentId });
+            return RedirectToAction("GoalScorers", new { id = TournamentId });
         }
     }
 }

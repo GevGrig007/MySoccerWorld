@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MySoccerWorld.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MySoccerWorld.BLL;
+using MySoccerWorld.Data;
+using MySoccerWorld.EF.Data;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Services;
 
 namespace MySoccerWorld
 {
@@ -23,7 +22,13 @@ namespace MySoccerWorld
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<SoccerContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<SoccerContext>(options => options.UseSqlServer(connection/*, b => b.MigrationsAssembly("MySoccerWorld.DAL")*/));
+            services.AddTransient<IDataManager, DataManager>();
+            services.AddTransient<ITournamentService, TournamentService>();
+            services.AddTransient<ILeagueService, LeagueService>();
+            services.AddTransient<IRatingService, RatingService>();
+            services.AddTransient<IShedulleService, ShedulleService>();
+            services.AddTransient<IClubService, ClubService>();
             services.AddControllersWithViews();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

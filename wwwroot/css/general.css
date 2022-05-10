@@ -52,6 +52,7 @@ h1 {
 .nav-item :hover{
     color:aliceblue;
     background-color:blue;
+    border-radius: unset;
 }
 .box {
     background-color: darkcyan;
@@ -102,4 +103,14 @@ h1 {
     font-variant-caps: small-caps;
     font-weight: 600;
     font-size: 18px;
+}
+.btn-collapse {
+    width: 100%;
+    border: solid 1px;
+    margin-top: 10px;
+    color: aqua;
+    background-color: darkslategray;
+}
+.btn-collapse:hover {
+    color: aliceblue;
 }

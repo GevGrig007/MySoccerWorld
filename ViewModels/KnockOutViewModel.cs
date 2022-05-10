@@ -1,8 +1,5 @@
-﻿using MySoccerWorld.Models.Entities;
-using System;
+﻿using MySoccerWorld.Model.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MySoccerWorld.ViewModels
 {

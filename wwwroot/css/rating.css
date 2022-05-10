@@ -24,8 +24,14 @@ a {
     color:white;
     padding:10px;
     display:block;
+    text-decoration:none;
 }
-.nav-item {
+.sidebar a:hover{
+    color: red;
+    border: double;
+    background-color: bisque;
+}
+header .nav-item {
     text-transform: uppercase;
     font-size: 20px;
     color: crimson;
@@ -33,12 +39,13 @@ a {
     background-color: ghostwhite;
     font-weight: 500;
 }
-.nav-link{
+header .nav-link{
     color:maroon;
 }
-.nav-item :hover{
+header .nav-item :hover{
     color:aliceblue;
     background-color:red;
+    border-radius:unset;
 }
 .mainrow {
     box-shadow: 1px 2px 10px 0px;
@@ -49,9 +56,37 @@ a {
     justify-content: center;
     min-width: 80%;
 }
+.mainrow2 {
+    box-shadow: 1px 2px 10px 0px;
+    color: lightcyan;
+    padding: 5% 10% 5% 15%;
+    background-color: firebrick;
+    min-width: 80%;
+}
+.mainrow2 ul li a {
+    color: coral;
+    font-size: 16px;
+    font-weight: 600;
+}
+.mainrow3 {
+    box-shadow: 1px 2px 10px 0px;
+    color: lightcyan;
+    padding: 20px;
+    background-color: firebrick;
+    font-size: 15px;
+}
+.mainrow4 {
+    box-shadow: 1px 2px 10px 0px;
+    color: lightcyan;
+    padding: 20px;
+    background-color: firebrick;
+    font-size: 15px;
+    width: 100%;
+}
 .mainsection {
     display: flex;
     justify-content: center;
+    padding-bottom:50px;
 }
 .table {
     color: azure;    
@@ -76,28 +111,12 @@ a {
     align-items:center;
 }
 h3 {
-    background-color: darkred;
     padding: 5px;
     text-align: center;
 }
 h5 {
     color:cornsilk;
     text-align:center;
-}
-.mainrow3 {
-    box-shadow: 1px 2px 10px 0px;
-    color: lightcyan;
-    padding: 20px;
-    background-color: firebrick;
-    font-size:15px;
-}
-.mainrow4 {
-    box-shadow: 1px 2px 10px 0px;
-    color: lightcyan;
-    padding: 20px;
-    background-color: firebrick;
-    font-size: 15px;
-    width:100%;
 }
 .season{
     color:white;

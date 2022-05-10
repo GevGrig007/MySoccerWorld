@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model.Entities;
+using MySoccerWorld.Model.Enums;
 using MySoccerWorld.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,9 +13,9 @@ namespace MySoccerWorld.Controllers
 {
     public class MatchesController : Controller
     {
-        private readonly ILogger<MatchesController> _logger;
-        private readonly SoccerContext db;
-        public MatchesController(ILogger<MatchesController> logger, SoccerContext context)
+        private readonly ILogger<LeaguesController> _logger;
+        private readonly IDataManager db;
+        public MatchesController (ILogger<LeaguesController> logger, IDataManager context)
         {
             _logger = logger;
             db = context;
@@ -25,54 +24,44 @@ namespace MySoccerWorld.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var match = await db.Matches.Include(m => m.Home)
-                                  .Include(m => m.Away)
-                                  .FirstOrDefaultAsync(m => m.Id == id);
-            ViewData["AwayTeam"] = new SelectList(db.Teams, "Id", "Name", match.AwayTeam);
-            ViewData["HomeTeam"] = new SelectList(db.Teams, "Id", "Name", match.HomeTeam);
-            ViewData["TournamentId"] = new SelectList(db.Tournaments, "Id", "Name", match.TournamentId);
+            var match = db.Matches.Get(id);
+            ViewData["AwayTeam"] = new SelectList(db.Teams.GetAll(), "Id", "Name");
+            ViewData["HomeTeam"] = new SelectList(db.Teams.GetAll(), "Id", "Name");
+            ViewData["TournamentId"] = new SelectList(db.Tournaments.GetAll(), "Id", "Name");
             return View(match);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id,Round,Group,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,HomeEx,AwayEx,HomePen,AwayPen,TournamentId")] Match match)
+        public IActionResult Edit([Bind("Id,Round,Group,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,HomeEx,AwayEx,HomePen,AwayPen,TournamentId")] Match match)
         {
             db.Matches.Update(match);
-            await db.SaveChangesAsync();
+            db.Save();
             return RedirectToAction("Matches", "Tournaments", new { id = match.TournamentId });
         }
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var match = await db.Matches.Include(m => m.Home)
-                                  .Include(m => m.Away)
-                                  .FirstOrDefaultAsync(m => m.Id == id);
+            var match = db.Matches.Get(id);
             return View(match);
         }
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var match = await db.Matches.FindAsync(id);
-            db.Matches.Remove(match);
-            await db.SaveChangesAsync();
+            var match = db.Matches.Get(id);
+            db.Matches.Delete(match.Id);
+            db.Save();
             return RedirectToAction("Matches", "Tournaments", new { id = match.TournamentId });
         }
-        public async Task<IActionResult> EditScore(int id)
+        public IActionResult EditScore(int id)
         {
-            var match = await db.Matches.Include(m => m.Home).Include(m => m.Away)
-                                        .Include(m => m.Tournament).ThenInclude(m => m.League)
-                                        .FirstOrDefaultAsync(m => m.Id == id);
-            var players = db.Players.Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player)
-                                     .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
-                                     .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists)
-                                    .ToList();
+            var match = db.Matches.Details(id);
             if (match.Tournament.League.Type == "National")
             {
                 var matchView = new MatchViewModel()
                 {
                     Match = match,
-                    HomePlayers = players.Where(p => p.PlayerTeams.FirstOrDefault().TeamId == match.HomeTeam).ToList(),
-                    AwayPlayers = players.Where(p => p.PlayerTeams.FirstOrDefault().TeamId == match.AwayTeam).ToList()
+                    HomePlayers = db.Players.ClubPlayers(match.HomeTeam),
+                    AwayPlayers = db.Players.ClubPlayers(match.AwayTeam)
                 };
                 return View(matchView);
             }
@@ -81,19 +70,19 @@ namespace MySoccerWorld.Controllers
                 var matchView = new MatchViewModel()
                 {
                     Match = match,
-                    HomePlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.HomeTeam).ToList(),
-                    AwayPlayers = players.Where(p => p.PlayerTeams.LastOrDefault().TeamId == match.AwayTeam).ToList()
+                    HomePlayers = db.Players.NationalPlayers(match.HomeTeam),
+                    AwayPlayers = db.Players.NationalPlayers(match.AwayTeam)
                 };
                 return View(matchView);
             }
-            
+
         }
         [HttpPost]
-        public async Task<IActionResult> EditScore(int id, [Bind("Id,Round,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,TournamentId,Group")] Match match)
+        public IActionResult EditScore(int id, [Bind("Id,Round,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,TournamentId,Group")] Match match)
         {
-            db.Update(match);
-            await db.SaveChangesAsync();
-            var tournament = db.Tournaments.Find(match.TournamentId);
+            db.Matches.Update(match);
+            db.Save();
+            var tournament = db.Tournaments.Get(id);
             var link = "";
             if (tournament.TournamentType == TournamentType.Regular)
             {
@@ -122,18 +111,17 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction(link, "Tournaments", new { id = match.Tournament.Id });
         }
         [HttpPost]
-        public async Task<IActionResult> GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)
+        public IActionResult GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)
         {
-            var match = await db.Matches.FirstOrDefaultAsync(m => m.Id == goal.MatchId);
-            await db.Goals.AddRangeAsync(goal);
-            await db.SaveChangesAsync();
-            return RedirectToAction("EditScore", "Matches", new { id = match.Id });
+            db.Matches.AddGoal(goal);
+            db.Save();
+            return RedirectToAction("EditScore", "Matches", new { id = goal.MatchId });
         }
         [HttpPost]
-        public async Task<IActionResult> AsistAdd([Bind("MatchId,PlayerTeamId")] Asist asist)
+        public IActionResult AsistAdd([Bind("MatchId,PlayerTeamId")] Asist asist)
         {
-            await db.Asists.AddRangeAsync(asist);
-            await db.SaveChangesAsync();
+            db.Matches.AddAsist(asist);
+            db.Save();
             return RedirectToAction("EditScore", "Matches", new { id = asist.MatchId });
         }
     }

@@ -2624,6 +2624,77 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "MySoccerWorld.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "MySoccerWorld.Interfaces": "1.0.0",
+          "MySoccerWorld.Model": "1.0.0",
+          "MySoccerWorld.Services": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MySoccerWorld.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MySoccerWorld.BLL.dll": {}
+        }
+      },
+      "MySoccerWorld.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.14",
+          "Microsoft.EntityFrameworkCore.Relational": "5.0.14",
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.14",
+          "Microsoft.VisualStudio.Web.CodeGeneration": "5.0.2",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Core": "5.0.2",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
+          "MySoccerWorld.Interfaces": "1.0.0",
+          "MySoccerWorld.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MySoccerWorld.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MySoccerWorld.Data.dll": {}
+        }
+      },
+      "MySoccerWorld.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "MySoccerWorld.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MySoccerWorld.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MySoccerWorld.Interfaces.dll": {}
+        }
+      },
+      "MySoccerWorld.Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/MySoccerWorld.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MySoccerWorld.Model.dll": {}
+        }
+      },
+      "MySoccerWorld.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "MySoccerWorld.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MySoccerWorld.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MySoccerWorld.Services.dll": {}
+        }
       }
     }
   },
@@ -8151,6 +8222,31 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "MySoccerWorld.BLL/1.0.0": {
+      "type": "project",
+      "path": "../MySoccerWorld.BLL/MySoccerWorld.BLL.csproj",
+      "msbuildProject": "../MySoccerWorld.BLL/MySoccerWorld.BLL.csproj"
+    },
+    "MySoccerWorld.Data/1.0.0": {
+      "type": "project",
+      "path": "../MySoccerWorld.Data/MySoccerWorld.Data.csproj",
+      "msbuildProject": "../MySoccerWorld.Data/MySoccerWorld.Data.csproj"
+    },
+    "MySoccerWorld.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../MySoccerWorld.Interfaces/MySoccerWorld.Interfaces.csproj",
+      "msbuildProject": "../MySoccerWorld.Interfaces/MySoccerWorld.Interfaces.csproj"
+    },
+    "MySoccerWorld.Model/1.0.0": {
+      "type": "project",
+      "path": "../MySoccerWorld.Model/MySoccerWorld.Model.csproj",
+      "msbuildProject": "../MySoccerWorld.Model/MySoccerWorld.Model.csproj"
+    },
+    "MySoccerWorld.Services/1.0.0": {
+      "type": "project",
+      "path": "../MySoccerWorld.Services/MySoccerWorld.Services.csproj",
+      "msbuildProject": "../MySoccerWorld.Services/MySoccerWorld.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8164,6 +8260,11 @@
       "Microsoft.VisualStudio.Web.CodeGeneration >= 5.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Core >= 5.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
+      "MySoccerWorld.BLL >= 1.0.0",
+      "MySoccerWorld.Data >= 1.0.0",
+      "MySoccerWorld.Interfaces >= 1.0.0",
+      "MySoccerWorld.Model >= 1.0.0",
+      "MySoccerWorld.Services >= 1.0.0",
       "bootstrap.sass >= 5.1.3"
     ]
   },
@@ -8197,7 +8298,23 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj": {
+              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj"
+            },
+            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj": {
+              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj"
+            },
+            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj": {
+              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj"
+            },
+            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj": {
+              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj"
+            },
+            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj": {
+              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

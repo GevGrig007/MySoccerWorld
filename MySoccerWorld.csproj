@@ -111,6 +111,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MySoccerWorld.BLL\MySoccerWorld.BLL.csproj" />
+    <ProjectReference Include="..\MySoccerWorld.Data\MySoccerWorld.Data.csproj" />
+    <ProjectReference Include="..\MySoccerWorld.Interfaces\MySoccerWorld.Interfaces.csproj" />
+    <ProjectReference Include="..\MySoccerWorld.Model\MySoccerWorld.Model.csproj" />
+    <ProjectReference Include="..\MySoccerWorld.Services\MySoccerWorld.Services.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

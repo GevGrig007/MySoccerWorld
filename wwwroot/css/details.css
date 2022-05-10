@@ -9,7 +9,7 @@
 a {
     text-decoration: none;
 }
-.nav-item {
+header .nav-item {
     text-transform: uppercase;
     font-size: 20px;
     color: darkturquoise;
@@ -17,9 +17,10 @@ a {
     background-color: ghostwhite;
     font-weight: 500;
 }
-.nav-item :hover {
+header .nav-item :hover {
     color: aliceblue;
     background-color: blue;
+    border-radius: unset;
 }
 .box {
     background-color: midnightblue;

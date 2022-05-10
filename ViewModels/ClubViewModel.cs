@@ -1,9 +1,6 @@
-﻿using MySoccerWorld.Models.Entities;
-using MySoccerWorld.Models.Services;
-using System;
+﻿using MySoccerWorld.Model;
+using MySoccerWorld.Model.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MySoccerWorld.ViewModels
 {
@@ -14,5 +11,6 @@ namespace MySoccerWorld.ViewModels
         public List<Player> Players { get; set; }
         public ClubStats Stats { get; set; }
         public IEnumerable<Rating> Ratings { get; set; }
+
     }
 }

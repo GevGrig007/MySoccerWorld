@@ -154,6 +154,7 @@ h1 {
 .nav-item :hover{
     color:aliceblue;
     background-color:blue;
+    border-radius: unset;
 }
 .bestplayer {
     justify-content: center;

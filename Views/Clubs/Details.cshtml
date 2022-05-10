@@ -47,11 +47,11 @@
                 <div class="p-5">
                     @foreach (var r in Model.Ratings)
                     {
-                    <div class="ctr-spacearound">
-                        <div class="col-3"> @r.Tournament.Season.Data </div>
-                        <div class="col-6"> @r.Tournament.Name </div>
-                        <div class="col-3"> @r.Round  @r.Position </div>
-                    </div>  
+                        <div class="ctr-spacearound">
+                            <div class="col-3"> @r.Tournament.Season.Data </div>
+                            <div class="col-6"> @r.Tournament.Name </div>
+                            <div class="col-3"> @r.Round  @r.Position </div>
+                        </div>
                     }
                 </div>
             </div>
@@ -59,63 +59,45 @@
                 <div>
                     <div class="center mainname">
                         PLAYERS
+                    </div >
+                    <div class="p-5">
+                        @foreach (var p in Model.Players)
+                        {
+                            <div class="d-flex ml-5">
+                                <img src="@p.Country.Flag" width="24" height="22" />
+                                <div class="ml-2">  @p.Name </div>
+                            </div>
+                        }
                     </div>
-                    @foreach (var p in Model.Players)
-                    {
-                        <div class="d-flex ml-5">
-                            <img src="@p.Country.Flag" width="24" height="22" />
-                            <div class="ml-2">  @p.Name </div>
-                        </div>
-                    }
                 </div>
             </div>
         </div>
         <div class="mt-5">
-            <div class="mainname"> MATCHES </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>DATA</th>
-                        <th>HOME</th>
-                        <th>TOURNAMENT</th>
-                        <th>ROUND</th>
-                        <th>GR</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th>ET</th>
-                        <th>ET</th>
-                        <th>P</th>
-                        <th>P</th>
-                        <th>GOALS</th>
-                    </tr>
-                </thead>
-                @foreach (var m in Model.Matches)
-                {
-                    <tr>
-                        <td>@m.Data</td>
-                        <td>@m.Neytral</td>
-                        <td>@m.Tournament.Name</td>
-                        <td>@m.Round</td>
-                        <td>@m.Group</td>
-                        <td>@m.Home.Name</td>
-                        <td>@m.Away.Name</td>
-                        <td>@m.HomeScore</td>
-                        <td>@m.AwayScore</td>
-                        <td>@m.HomeEx</td>
-                        <td>@m.AwayEx</td>
-                        <td>@m.HomePen</td>
-                        <td>@m.AwayPen</td>
-                        <td style=" font-size:12px;">
-                            @foreach (var g in m.Goals.GroupBy(g => g.PlayerTeam.Player.Name))
-                            {
-                                <div> @g.Key - @g.Count() </div>
-                            }
-                        </td>
-                    </tr>
-                }
-            </table>
+            <div class="mainname center mb-4">
+                MATCHES
+            </div>
+            <div class="container">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link" href="#all" role="tab" data-toggle="tab">ALL MATCHES</a></li>
+                    <li class="nav-item active"><a class="nav-link active" href="#latest" role="tab" data-toggle="tab">LAST 10 MATCHES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#regional" role="tab" data-toggle="tab">REGIONAL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#eurocups" role="tab" data-toggle="tab">EURO CUP</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade" id="all">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches)
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="latest">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.OrderByDescending(m => m.Data).Take(10))
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="regional">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "Regional"))
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="eurocups">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "EuroCup"))
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MySoccerWorld.Models;
+using MySoccerWorld.EF.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MySoccerWorld
 {
@@ -22,7 +18,7 @@ namespace MySoccerWorld
                 try
                 {
                     var context = services.GetRequiredService<SoccerContext>();
-                    SampleData.Initialize(context);
+                    StartData.Initialize(context);
                 }
                 catch (Exception ex)
                 {
@@ -32,7 +28,6 @@ namespace MySoccerWorld
             }
             host.Run();
         }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

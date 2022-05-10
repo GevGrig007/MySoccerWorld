@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model.Entities;
 using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Services;
 using MySoccerWorld.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,15 +15,17 @@ namespace MySoccerWorld.Controllers
     public class NationalsController : Controller
     {
         private readonly ILogger<NationalsController> _logger;
-        private readonly SoccerContext db;
-        public NationalsController(ILogger<NationalsController> logger, SoccerContext context)
+        private readonly IDataManager db;
+        private readonly IClubService _serv;
+        public NationalsController(ILogger<NationalsController> logger, IDataManager context, IClubService service)
         {
             _logger = logger;
             db = context;
+            _serv = service;
         }
         public async Task<IActionResult> Index(ClubsSort sortType = ClubsSort.ClubId)
         {
-            IQueryable<National> nationals = db.Nationals.Include(c => c.CoachTeams).ThenInclude(c => c.Coach);
+            IQueryable<National> nationals = db.Nationals.GetAll();
             ViewData["NameSort"] = sortType == ClubsSort.NameAsc ? ClubsSort.NameDesc : ClubsSort.NameAsc;
             ViewData["CountrySort"] = sortType == ClubsSort.CountryAsc ? ClubsSort.CountryDesc : ClubsSort.CountryAsc;
             nationals = sortType switch
@@ -37,52 +38,46 @@ namespace MySoccerWorld.Controllers
             };
             return View(await nationals.ToListAsync());
         }
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            var players = await db.Players.Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player).ToListAsync();
-            var nationalPlayers = players.Where(p => p.PlayerTeams.FirstOrDefault().TeamId == id).ToList();
-            var national = await db.Nationals.Include(c => c.Ratings).ThenInclude(r => r.Tournament).ThenInclude(t => t.Season)
-                                                           .Include(c => c.PlayerTeams).ThenInclude(p => p.Team)
-                                                           .Include(c => c.CoachTeams).ThenInclude(c => c.Team).FirstOrDefaultAsync(c => c.Id == id);
-            var matches = db.Matches.Include(m => m.Tournament).Include(m => m.Home).Include(m => m.Away)
-                                           .Include(m => m.Goals).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Include(m => m.Asists).ThenInclude(g => g.PlayerTeam).ThenInclude(p => p.Player)
-                                           .Where(m => m.HomeTeam == id || m.AwayTeam == id).ToList();
-            var stats = new ClubStats(national, matches);
+            var national = db.Nationals.Details(id);
+            var matches = db.Matches.GetByTeam(id);
+            var stats = _serv.Stats(national, matches.ToList());
             var clubView = new NationalViewModel()
             {
-                Team = national,
-                Matches = matches,
-                Players = nationalPlayers,
-                Stats = stats,
+                Team = db.Nationals.Details(id),
+                Matches = matches.ToList(),
+                Players = db.Players.NationalPlayers(id),
+                Stats = _serv.Stats(national, matches.ToList()),
                 Ratings = national.Ratings.OrderBy(t => t.Tournament.LeagueId)
             };
             return View(clubView);
         }
         public IActionResult CreatePlayer(int id)
         {
-            National national = db.Nationals.Find(id);
-            ViewBag.Players = db.Players.Include(p => p.PlayerTeams).Where(p => p.Country.Name == national.Name).ToList();
+            National national = db.Nationals.Get(id);
+            ViewBag.Players = db.Players.GetAll();
             return View(national);
         }
 
         [HttpPost]
         public IActionResult CreatePlayer(National national, int[] selectedPlayers)
         {
-            Team newNational = db.Teams.Include(n => n.PlayerTeams).ThenInclude(p=>p.Player).FirstOrDefault(n => n.Id == national.Id);
+            Team newNational = db.Teams.Details(national.Id);
             newNational.Name = national.Name;
             if (selectedPlayers != null)
             {
-                foreach (var c in db.Players.Include(c=>c.PlayerTeams).Where(c => selectedPlayers.Contains(c.Id)))
+                foreach (var c in db.Players.GetAll().Where(c => selectedPlayers.Contains(c.Id)))
                 {
-                    if (c.PlayerTeams.Any(c => c.Team == newNational)) { } 
-                    else {
-                        PlayerTeam playerTeams = new() { PlayerId =c.Id, TeamId = national.Id };
-                        db.Add(playerTeams);
-                    }           
+                    if (c.PlayerTeams.Any(c => c.Team == newNational)) { }
+                    else
+                    {
+                        PlayerTeam playerTeams = new() { PlayerId = c.Id, TeamId = national.Id };
+                        db.PlayerTeams.Update(playerTeams);
+                    }
                 }
             }
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Details", new { id = newNational.Id });
         }
         public IActionResult CreateNational()
@@ -90,12 +85,12 @@ namespace MySoccerWorld.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateNational([Bind("Name,Country,REgion")] National national)
+        public IActionResult CreateNational([Bind("Name,Country,REgion")] National national)
         {
             if (ModelState.IsValid)
             {
-                db.Add(national);
-                await db.SaveChangesAsync();
+                db.Nationals.Update(national);
+                db.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(national);

@@ -7,19 +7,19 @@
     style="color: blanchedalmond; padding: 15px; margin-bottom: 50px; font-family: Impact;">
     @Model.Tournament.Name - @Model.Tournament.Season.Data
 </h1>
-<div>
+<div class="mt-5">
     @foreach (var m in Model.Matches.GroupBy(m => m.Round))
     {
-        <div>
-            <div class="row justify-content-center bg-success text-white p-2" style="border: solid 2px #3c14b9;font-size: 22px;font-weight: 700;">
-                @m.Key
-            </div>
-            @foreach (var c in m)
-            {
-                <div class="container">
-                    @await Html.PartialAsync("Match", c)
-                </div>
-            }
+    <div class="roundrow">
+        <div class="round">
+            @m.Key 
         </div>
+        @foreach (var c in m)
+        {
+            <div>
+                @await Html.PartialAsync("Match", c)
+            </div>
+        }
+    </div>
     }
 </div>

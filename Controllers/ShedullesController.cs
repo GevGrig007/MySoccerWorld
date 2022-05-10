@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
-using MySoccerWorld.Models.Services;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model;
+using MySoccerWorld.Model.Entities;
+using MySoccerWorld.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,118 +16,108 @@ namespace MySoccerWorld.Controllers
     public class ShedullesController : Controller
     {
         private readonly ILogger<ShedullesController> _logger;
-        private readonly SoccerContext db;
-        public ShedullesController(ILogger<ShedullesController> logger, SoccerContext context)
+        private readonly IDataManager db;
+        private IShedulleService _serv;
+        public ShedullesController(ILogger<ShedullesController> logger, IDataManager context, IShedulleService service)
         {
             _logger = logger;
             db = context;
+            _serv = service;
         }
-        public async Task<IActionResult> Index(int id)
+        public IActionResult Index(int id)
         {
-            var tournament = await db.Tournaments
-                .Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams)
-                .Include(t => t.Season)
-                .Include(t => t.Matches)
-                .Include(t => t.Matches).ThenInclude(m => m.Goals).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .Include(t => t.Matches).ThenInclude(m => m.Asists).ThenInclude(p => p.PlayerTeam).ThenInclude(pt => pt.Player)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var tournament = db.Tournaments.Details(id);
             var teams = tournament.Teams.ToList();
             ViewBag.Teams = new SelectList(teams, "Id", "Name");
-            ViewBag.BestPlayers = await db.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
-                                            .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
-                                            .Where(p => p.TournamentId == id).ToListAsync();
+            ViewBag.BestPlayers = db.BestPlayers.GetByTournament(id).ToList();
             return View(tournament);
         }
         // Add Teams
         [HttpGet]
         public IActionResult AddTeams(int id)
         {
-            Tournament tournament = db.Tournaments.Include(t => t.Teams).Include(t => t.League).FirstOrDefault(t => t.Id == id);
+            Tournament tournament = db.Tournaments.Details(id);
             if (tournament == null)
             {
                 return NotFound();
             }
-            ViewBag.Clubs = db.Clubs.Where(c => c.Country.Region == tournament.League.Region).ToList();
-            ViewBag.EuroClubs = db.Clubs.ToList();
-            ViewBag.Nationals = db.Nationals.OrderBy(n=>n.Region).ToList();
+            ViewBag.Clubs = db.Clubs.GetAll().Where(c => c.Country.Region == tournament.League.Region).ToList();
+            ViewBag.EuroClubs = db.Teams.GetAll();
+            ViewBag.Nationals = db.Nationals.GetAll().OrderBy(n => n.Region).ToList();
             return View(tournament);
         }
         [HttpPost]
         public IActionResult AddTeams(Tournament tournament, int[] selectedClubs)
         {
-            Tournament newTournament = db.Tournaments.Include(t => t.Teams).FirstOrDefault(t => t.Id == tournament.Id);
+            Tournament newTournament = db.Tournaments.Get(tournament.Id);
             newTournament.Name = tournament.Name;
             newTournament.Teams.Clear();
             if (selectedClubs != null)
             {
-                foreach (var c in db.Teams.Where(c => selectedClubs.Contains(c.Id)))
+                foreach (var c in db.Teams.GetAll().Where(c => selectedClubs.Contains(c.Id)))
                 {
                     newTournament.Teams.Add(c);
                 }
             }
-            db.Entry(newTournament).State = EntityState.Modified;
-            db.SaveChanges();
+            db.Tournaments.Update(newTournament);
+            db.Save();
             return RedirectToAction("Index", new { id = newTournament.Id });
         }
         // Sheduelles
 
         [HttpPost]
-        public async Task<IActionResult> ShedulleFor9(int id, int[] clubs, double data)
+        public IActionResult ShedulleFor9(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament =  db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.GenerateFor9Teams(tournament, teams, data);
+            var fixtures = _serv.GenerateFor9Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleFor12(int id, int[] clubs, double data)
+        public IActionResult ShedulleFor12(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.GenerateFor12Teams(tournament, teams, data);
+            var fixtures = _serv.GenerateFor12Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleFor16(int id, int[] clubs, double data)
+        public IActionResult ShedulleFor16(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.GenerateFor16Teams(tournament, teams, data);
+            var fixtures = _serv.GenerateFor16Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleGroup(int id, int[] clubs, double data)
+        public IActionResult ShedulleGroup(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
             if (teams.Count == 32)
@@ -140,30 +131,30 @@ namespace MySoccerWorld.Controllers
                 var groupGteams = new List<Team> { teams[24], teams[25], teams[26], teams[27] };
                 var groupHteams = new List<Team> { teams[28], teams[29], teams[30], teams[31] };
                 var groupA = new TournamentGroup { Name = "A" };
-                var groupAm = groupA.GroupShedulle(tournament, groupAteams, data);
+                var groupAm = _serv.GroupShedulle(tournament, groupAteams, data,groupA.Name);
                 db.Matches.AddRange(groupAm);
                 var groupB = new TournamentGroup { Name = "B" };
-                var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
+                var groupBm = _serv.GroupShedulle(tournament, groupBteams, data,groupB.Name);
                 db.Matches.AddRange(groupBm);
                 var groupC = new TournamentGroup { Name = "C" };
-                var groupCm = groupC.GroupShedulle(tournament, groupCteams, data);
+                var groupCm = _serv.GroupShedulle(tournament, groupCteams, data, groupC.Name);
                 db.Matches.AddRange(groupCm);
                 var groupD = new TournamentGroup { Name = "D" };
-                var groupDm = groupD.GroupShedulle(tournament, groupDteams, data);
+                var groupDm = _serv.GroupShedulle(tournament, groupDteams, data,groupD.Name);
                 db.Matches.AddRange(groupDm);
                 var groupE = new TournamentGroup { Name = "E" };
-                var groupEm = groupE.GroupShedulle(tournament, groupEteams, data);
+                var groupEm = _serv.GroupShedulle(tournament, groupEteams, data, groupE.Name);
                 db.Matches.AddRange(groupEm);
                 var groupF = new TournamentGroup { Name = "F" };
-                var groupFm = groupF.GroupShedulle(tournament, groupFteams, data);
+                var groupFm = _serv.GroupShedulle(tournament, groupFteams, data, groupF.Name);
                 db.Matches.AddRange(groupFm);
                 var groupG = new TournamentGroup { Name = "G" };
-                var groupGm = groupG.GroupShedulle(tournament, groupGteams, data);
+                var groupGm = _serv.GroupShedulle(tournament, groupGteams, data,groupG.Name);
                 db.Matches.AddRange(groupGm);
                 var groupH = new TournamentGroup { Name = "H" };
-                var groupHm = groupH.GroupShedulle(tournament, groupHteams, data);
+                var groupHm = _serv.GroupShedulle(tournament, groupHteams, data, groupH.Name);
                 db.Matches.AddRange(groupHm);
-                db.SaveChanges();
+                db.Save();
             }
             else if (teams.Count == 20)
             {
@@ -172,17 +163,17 @@ namespace MySoccerWorld.Controllers
                 var groupCteams = new List<Team> { teams[10], teams[11], teams[12], teams[13], teams[14] };
                 var groupDteams = new List<Team> { teams[15], teams[16], teams[17], teams[18], teams[19] };
                 var groupA = new TournamentGroup { Name = "A" };
-                var groupAm = groupA.EuroGroupShedulle(tournament, groupAteams, data);
+                var groupAm = _serv.EuroGroupShedulle(tournament, groupAteams, data, groupA.Name);
                 db.Matches.AddRange(groupAm);
                 var groupB = new TournamentGroup { Name = "B" };
-                var groupBm = groupB.EuroGroupShedulle(tournament, groupBteams, data);
+                var groupBm = _serv.EuroGroupShedulle(tournament, groupBteams, data, groupB.Name);
                 db.Matches.AddRange(groupBm);
                 var groupC = new TournamentGroup { Name = "C" };
-                var groupCm = groupC.EuroGroupShedulle(tournament, groupCteams, data);
+                var groupCm = _serv.EuroGroupShedulle(tournament, groupCteams, data, groupC.Name);
                 db.Matches.AddRange(groupCm);
                 var groupD = new TournamentGroup { Name = "D" };
-                var groupDm = groupD.EuroGroupShedulle(tournament, groupDteams, data);
-                db.Matches.AddRange(groupDm);     
+                var groupDm = _serv.EuroGroupShedulle(tournament, groupDteams, data, groupD.Name);
+                db.Matches.AddRange(groupDm);
             }
             else if (teams.Count == 16)
             {
@@ -191,16 +182,16 @@ namespace MySoccerWorld.Controllers
                 var groupCteams = new List<Team> { teams[8], teams[9], teams[10], teams[11] };
                 var groupDteams = new List<Team> { teams[12], teams[13], teams[14], teams[15] };
                 var groupA = new TournamentGroup { Name = "A" };
-                var groupAm = groupA.GroupShedulle(tournament, groupAteams, data);
+                var groupAm = _serv.GroupShedulle(tournament, groupAteams, data, groupA.Name);
                 db.Matches.AddRange(groupAm);
                 var groupB = new TournamentGroup { Name = "B" };
-                var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
+                var groupBm = _serv.GroupShedulle(tournament, groupBteams, data, groupB.Name);
                 db.Matches.AddRange(groupBm);
                 var groupC = new TournamentGroup { Name = "C" };
-                var groupCm = groupC.GroupShedulle(tournament, groupCteams, data);
+                var groupCm = _serv.GroupShedulle(tournament, groupCteams, data, groupC.Name);
                 db.Matches.AddRange(groupCm);
                 var groupD = new TournamentGroup { Name = "D" };
-                var groupDm = groupD.GroupShedulle(tournament, groupDteams, data);
+                var groupDm = _serv.GroupShedulle(tournament, groupDteams, data, groupD.Name);
                 db.Matches.AddRange(groupDm);
             }
             else if (teams.Count == 8)
@@ -208,157 +199,179 @@ namespace MySoccerWorld.Controllers
                 var groupAteams = new List<Team> { teams[0], teams[1], teams[2], teams[3] };
                 var groupBteams = new List<Team> { teams[4], teams[5], teams[6], teams[7] };
                 var groupA = new TournamentGroup { Name = "A" };
-                var groupAm = groupA.GroupShedulle(tournament, groupAteams, data);
+                var groupAm = _serv.GroupShedulle(tournament, groupAteams, data, groupA.Name);
                 db.Matches.AddRange(groupAm);
                 var groupB = new TournamentGroup { Name = "B" };
-                var groupBm = groupB.GroupShedulle(tournament, groupBteams, data);
+                var groupBm = _serv.GroupShedulle(tournament, groupBteams, data, groupB.Name);
                 db.Matches.AddRange(groupBm);
             }
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleKnockOut32(int id, int[] clubs, double data)
+        public IActionResult ShedulleKnockOut32(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Shedulle32(tournament, teams, data);
+            var fixtures = _serv.Shedulle32(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleKnockOut16(int id, int[] clubs, double data)
+        public IActionResult ShedulleKnockOut16(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Shedulle16(tournament, teams, data);
+            var fixtures = _serv.Shedulle16(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleKnockOut8(int id, int[] clubs, double data)
+        public IActionResult ShedulleKnockOut8(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Shedulle8(tournament, teams, data);
+            var fixtures = _serv.Shedulle8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleKnockOutQuarterDouble(int id, int[] clubs, double data)
+        public IActionResult ShedulleKnockOutQuarterDouble(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.QuartersDouble(tournament, teams, data);
+            var fixtures = _serv.QuartersDouble(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleKnockOutSemiDouble(int id, int[] clubs, double data)
+        public IActionResult ShedulleKnockOutSemiDouble(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.SemiDouble(tournament, teams, data);
+            var fixtures = _serv.SemiDouble(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleFinal(int id, int[] clubs, double data)
+        public IActionResult ShedulleFinal(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Final(tournament, teams, data);
+            var fixtures = _serv.Final(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedullEuro8(int id, int[] clubs, double data)
+        public IActionResult ShedullEuro8(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.ShedulleEuro8(tournament, teams, data);
+            var fixtures = _serv.ShedulleEuro8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleQuarter(int id, int[] clubs, double data)
+        public IActionResult ShedulleQuarter(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Quarters(tournament, teams, data);
+            var fixtures = _serv.Quarters(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
             return RedirectToAction("Index", "Tournaments");
         }
         [HttpPost]
-        public async Task<IActionResult> ShedulleSemi(int id, int[] clubs, double data)
+        public IActionResult ShedulleSemi(int id, int[] clubs, double data)
         {
-            Tournament tournament = await db.Tournaments.FindAsync(id);
+            Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
-                var team = db.Teams.Find(clubs[i]);
+                var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var generateShedulle = new CreatorShedulles();
-            var fixtures = generateShedulle.Semi(tournament, teams, data);
+            var fixtures = _serv.Semi(tournament, teams, data);
             db.Matches.AddRange(fixtures);
-            db.SaveChanges();
+            db.Save();
+            return RedirectToAction("Index", "Tournaments");
+        }
+        public IActionResult ShedulleQualification(int id, int teamscount)
+        {
+            var tournament = db.Tournaments.Details(id);
+            ViewBag.Teams = new SelectList(tournament.Teams, "Id", "Name");
+            ViewBag.TeamsCount = teamscount;
+            return View(tournament);
+        }
+        [HttpPost]
+        public IActionResult ShedulleQualification(int id, string round, string matchcount, int[] clubs, double data)
+        {
+            var tournament = db.Tournaments.Details(id);
+            var teams = new List<Team>();
+            for (var i = 0; i < clubs.Length; i++)
+            {
+                var team = db.Teams.Get(clubs[i]);
+                teams.Add(team);
+            };
+            if (matchcount == "1")
+            {
+                var fixtures = _serv.Qualification(tournament, teams, round, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
+            else
+            {
+                var fixtures = _serv.QualificationDouble(tournament, teams, round, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
             return RedirectToAction("Index", "Tournaments");
         }
     }

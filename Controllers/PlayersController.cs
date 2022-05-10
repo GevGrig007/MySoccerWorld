@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Model.Entities;
 using MySoccerWorld.Models;
-using MySoccerWorld.Models.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,15 +13,15 @@ namespace MySoccerWorld.Controllers
     public class PlayersController : Controller
     {
         private readonly ILogger<PlayersController> _logger;
-        private readonly SoccerContext db;
-        public PlayersController(ILogger<PlayersController> logger, SoccerContext context)
+        private readonly IDataManager db;
+        public PlayersController(ILogger<PlayersController> logger, IDataManager context)
         {
             _logger = logger;
             db = context;
         }
         public async Task<IActionResult> Index(PlayersSort sortType = PlayersSort.PlayerId)
         {
-            IQueryable<Player> players = db.Players.Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Team).Include(p => p.Country);
+            IQueryable<Player> players = db.Players.Sort();
             ViewData["NameSort"] = sortType == PlayersSort.NameAsc ? PlayersSort.NameDesc : PlayersSort.NameAsc;
             players = sortType switch
             {
@@ -32,86 +31,79 @@ namespace MySoccerWorld.Controllers
             };
             return View(await players.AsNoTracking().ToListAsync());
         }
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            var player = await db.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Team)                                         
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Season)
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists).FirstOrDefaultAsync(p => p.Id == id);
+            var player =  db.Players.Details(id);
             return View(player);
         }
         public IActionResult Create()
         {
-            ViewData["CountryId"] = new SelectList(db.Countries.OrderBy(c => c.Name), "Id", "Name");
+            ViewData["CountryId"] = new SelectList(db.Clubs.Countries().OrderBy(c => c.Name), "Id", "Name");
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id,Name,CountryId")] Player player)
+        public IActionResult Create([Bind("Id,Name,CountryId")] Player player)
         {
             if (ModelState.IsValid)
             {
-                db.Add(player);
-                await db.SaveChangesAsync();
+                db.Players.Update(player);
+                db.Save();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(db.Countries, "Id", "Id", player.CountryId);
             return View(player);
         }
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            var player = await db.Players.Include(p => p.Country).FirstOrDefaultAsync(p => p.Id == id);
-            ViewData["CountryId"] = new SelectList(db.Countries.OrderBy(c => c.Name), "Id", "Name", player.CountryId);
+            var player = db.Players.Get(id);
+            ViewData["CountryId"] = new SelectList(db.Clubs.Countries().OrderBy(c => c.Name), "Id", "Name", player.CountryId);
             return View(player);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CountryId")] Player player)
+        public IActionResult Edit(int id, [Bind("Id,Name,CountryId")] Player player)
         {
-            db.Update(player);
-            await db.SaveChangesAsync();
+            db.Players.Update(player);
+            db.Save();
             return RedirectToAction(nameof(Index));
         }
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            var player = await db.Players
-                .Include(p => p.Country)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var player = db.Players.Get(id);
             return View(player);
         }
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var player = await db.Players.FindAsync(id);
-            db.Players.Remove(player);
-            await db.SaveChangesAsync();
+            db.Players.Delete(id);
+            db.Save();
             return RedirectToAction(nameof(Index));
         }
         public IActionResult PlayerTeams()
         {
-            ViewData["PlayerId"] = new SelectList(db.Players.OrderBy(p => p.Name), "Id", "Name");
-            ViewData["SeasonId"] = new SelectList(db.Seasons, "Id", "Data");
-            ViewData["TeamId"] = new SelectList(db.Teams, "Id", "Name");
+            ViewData["PlayerId"] = new SelectList(db.Players.GetAll().OrderBy(p => p.Name), "Id", "Name");
+            ViewData["SeasonId"] = new SelectList(db.Seasons.GetAll(), "Id", "Data");
+            ViewData["TeamId"] = new SelectList(db.Teams.GetAll(), "Id", "Name");
             return View();
         }
         [HttpPost]
         public IActionResult PlayerTeams([Bind("Id,PlayerId,TeamId,SeasonId")] PlayerTeam playerTeam)
         {
-            db.Add(playerTeam);
-            db.SaveChanges();
+            db.PlayerTeams.Update(playerTeam);
+            db.Save();
             return RedirectToAction(nameof(Index));
         }
         public IActionResult AddPlayerTeams(int id)
         {
-            var player = db.Players.Find(id);
+            var player = db.Players.Get(id);
             ViewData["PlayerId"] = player;
-            ViewData["SeasonId"] = new SelectList(db.Seasons.OrderByDescending(s => s.Data), "Id", "Data");
-            ViewData["TeamId"] = new SelectList(db.Teams, "Id", "Name");
+            ViewData["SeasonId"] = new SelectList(db.Seasons.GetAll().OrderByDescending(s => s.Data), "Id", "Data");
+            ViewData["TeamId"] = new SelectList(db.Teams.GetAll(), "Id", "Name");
             return View();
         }
         [HttpPost]
         public IActionResult AddPlayerTeams([Bind("PlayerId,TeamId,SeasonId")] PlayerTeam playerTeam)
         {
-            db.Add(playerTeam);
-            db.SaveChanges();
+            db.PlayerTeams.Update(playerTeam);
+            db.Save();
             return RedirectToAction(nameof(Index));
         }
     }
