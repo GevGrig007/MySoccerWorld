@@ -24,12 +24,12 @@ namespace MySoccerWorld.Controllers
             db = context;
             _serv = service;
         }
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var teams = tournament.Teams.ToList();
             ViewBag.Teams = new SelectList(teams, "Id", "Name");
-            ViewBag.BestPlayers = db.BestPlayers.GetByTournament(id).ToList();
+            ViewBag.BestPlayers = await db.BestPlayers.GetByTournamentAsync(id);
             return View(tournament);
         }
         // Add Teams
@@ -42,7 +42,7 @@ namespace MySoccerWorld.Controllers
                 return NotFound();
             }
             ViewBag.Clubs = db.Clubs.GetAll().Where(c => c.Country.Region == tournament.League.Region).ToList();
-            ViewBag.EuroClubs = db.Teams.GetAll();
+            ViewBag.EuroClubs =  db.Clubs.GetAll().ToList();
             ViewBag.Nationals = db.Nationals.GetAll().OrderBy(n => n.Region).ToList();
             return View(tournament);
         }

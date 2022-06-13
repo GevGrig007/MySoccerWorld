@@ -1,13 +1,33 @@
 ﻿@model IEnumerable<Match>
 <div>
     <div>
+        @if (Model.Any(m => m.Round.Contains("Qualification")))
+        {
+            <div class="roundrow">
+                <div class="round">
+                    Qualification
+                </div>
+            </div>
+        }
+        @foreach (var m in Model.Where(m => m.Round.Contains("Qualification")))
+        {
+
+            if (m != null)
+            {
+                <div>
+                    @await Html.PartialAsync("Match", m)
+                </div>
+            }
+        }
+    </div>
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/64 finals")))
         {
-        <div class="roundrow">
-            <div class="round">
-                1/64   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/64   FINAL
+                </div>
             </div>
-        </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/64 finals")))
         {
@@ -20,14 +40,14 @@
             }
         }
     </div>
-    <div >
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/32")))
         {
-        <div class="roundrow"> 
-            <div class="round">
-                1/32   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/32   FINAL
+                </div>
             </div>
-        </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/32")))
         {
@@ -40,15 +60,18 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/16")))
         {
-            <div class="round">
-                1/16   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/32   FINAL
+                </div>
             </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/16")))
         {
+
             if (m != null)
             {
                 <div>
@@ -57,15 +80,18 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/8")))
         {
-            <div class="round">
-                1/8   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/32   FINAL
+                </div>
             </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/8")))
         {
+
             if (m != null)
             {
                 <div>
@@ -74,15 +100,18 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/4")))
         {
-            <div class="round">
-                1/4   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/32   FINAL
+                </div>
             </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/4")))
         {
+
             if (m != null)
             {
                 <div>
@@ -91,15 +120,18 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div>
         @if (Model.Any(m => m.Round.Contains("1/2")))
         {
-            <div class="round">
-                1/2   FINAL
+            <div class="roundrow">
+                <div class="round">
+                    1/32   FINAL
+                </div>
             </div>
         }
         @foreach (var m in Model.Where(m => m.Round.Contains("1/2")))
         {
+
             if (m != null)
             {
                 <div>
@@ -108,11 +140,13 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div >
         @if (Model.Any(m => m.Round == "Bronze-Match"))
         {
-            <div class="round">
-                BRONZE-MATCH
+            <div class="roundrow">
+                <div class="round">
+                    BRONZE-MATCH
+                </div>
             </div>
         }
         @foreach (var m in Model.Where(m => m.Round == "Bronze-Match"))
@@ -125,12 +159,14 @@
             }
         }
     </div>
-    <div class="roundrow">
+    <div>
         @if (Model.Any(m => m.Round == "Final"))
         {
-            <div class="round">
-                FINAL
-            </div>
+            <div class="roundrow">
+                <div class="round">
+                    FINAL
+                </div>
+            </div>   
         }
         @foreach (var m in Model.Where(m => m.Round == "Final"))
         {

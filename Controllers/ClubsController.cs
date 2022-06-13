@@ -38,17 +38,17 @@ namespace MySoccerWorld.Controllers
             };
             return View(await clubs.AsNoTracking().ToListAsync());
         }
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var matches = db.Matches.GetByTeam(id);
-            var club = db.Clubs.Get(id);
+            var club = await db.Clubs.Get(id);
             var clubView = new ClubViewModel()
             {
-                Team = db.Clubs.Details(id),
+                Team = await db.Clubs.Details(id),
                 Matches = matches.ToList(),
-                Players = db.Clubs.Players(id),
-                Stats = _serv.Stats(club, matches.ToList()),
-                Ratings = club.Ratings.OrderBy(t => t.Tournament.LeagueId)
+                Players = await db.Clubs.Players(id),
+                Stats =  _serv.Stats(club, matches.ToList()),
+                Ratings =  club.Ratings.OrderBy(t => t.Tournament.LeagueId)
             };
             return View(clubView);
         }

@@ -45,9 +45,9 @@ namespace MySoccerWorld.Controllers
         }
         public IActionResult Edit(int id)
         {
-            var bestPlayer = db.BestPlayers.Get(id);
-            ViewData["PlayerTeamId"] = new SelectList(db.BestPlayers.GetPlayers(), "Id", "Player.Name", bestPlayer.PlayerTeamId);
-            ViewData["TournamentId"] = new SelectList(db.Tournaments.GetAll(), "Id", "Name", bestPlayer.TournamentId);
+            var bestPlayer = db.BestPlayers.GetAsync(id);
+            ViewData["PlayerTeamId"] = new SelectList(db.BestPlayers.GetPlayers(), "Id", "Player.Name");
+            ViewData["TournamentId"] = new SelectList(db.Tournaments.GetAll(), "Id", "Name");
             return View(bestPlayer);
         }
         [HttpPost]

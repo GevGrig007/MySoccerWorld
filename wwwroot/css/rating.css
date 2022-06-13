@@ -103,6 +103,16 @@ header .nav-item :hover{
     font-variant-caps: small-caps;
     font-size: 18px;
 }
+.teamnameleft {
+    font-weight: 600;
+    font-variant-caps: small-caps;
+    font-size: 18px;
+}
+.teamnameleft img{
+    height:38px;
+    width:40px;
+    margin-right:10px;
+}
 .points {
     font-weight: 600;
 }

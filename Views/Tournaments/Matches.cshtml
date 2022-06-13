@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var m in Model.Matches.OrderBy(m => m.Round))
+            @foreach (var m in ViewBag.Matches)
             {
                 <tr>
                     <td>@m.Round</td>

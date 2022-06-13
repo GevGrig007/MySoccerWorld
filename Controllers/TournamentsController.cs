@@ -43,8 +43,44 @@ namespace MySoccerWorld.Controllers
             var leagues =  db.Leagues.GetAll().Where(l => l.Type == "National").ToList();
             return View("Index", leagues);
         }
-        // Details
-        public IActionResult RegionalDetails(int id)
+        //Details
+        //public IActionResult Details(int id)
+        //{
+        //    var matches = db.Matches.GetByTournament(id);
+        //    var tournament = db.Tournaments.Details(id);
+        //    if (!matches.Any())
+        //    {
+        //        var emptyTournamnet = new TournamentViewModel()
+        //        {
+        //            Tournament = tournament,
+        //            Teams = tournament.Teams.ToList(),
+        //            Matches = matches.ToList(),
+        //            BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+        //        };
+        //        return View(emptyTournamnet);
+        //    }
+        //    else if (tournament.TournamentType == TournamentType.Regular){
+        //        var standings = _serv.CalculatingTable(matches, tournament.Teams);
+        //        var tournamentView = new TournamentViewModel()
+        //        {
+        //            Tournament = tournament,
+        //            Teams = tournament.Teams.ToList(),
+        //            Matches = matches.ToList(),
+        //            Goals = db.PlayerTeams.GoalScorers(id),
+        //            Asists = db.PlayerTeams.Asisters(id),
+        //            BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+        //            TournamentStandings = standings.OrderByDescending(c => c.Points)
+        //                                           .ThenByDescending(c => c.GoalDifference)
+        //                                           .ThenByDescending(c => c.GoalsFor)
+        //        };
+        //        return View(tournamentView);
+        //    }
+        //    else if (tournament.TournamentType == TournamentType.EuroCup)
+        //    {
+
+        //    }
+        //}
+        public async Task<IActionResult> RegionalDetails(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var matches =  db.Matches.GetByTournament(id);
@@ -58,7 +94,7 @@ namespace MySoccerWorld.Controllers
                     Matches = matches.ToList(),
                     Goals = db.PlayerTeams.GoalScorers(id),
                     Asists = db.PlayerTeams.Asisters(id),
-                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id),
                     TournamentStandings = standings.OrderByDescending(c => c.Points)
                                                    .ThenByDescending(c => c.GoalDifference)
                                                    .ThenByDescending(c => c.GoalsFor)
@@ -70,11 +106,11 @@ namespace MySoccerWorld.Controllers
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
                 Matches = matches.ToList(),
-                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+                BestPlayer = await db.BestPlayers.GetByTournamentAsync(id)
             };
             return View(emptyTournamnet);
         }
-        public IActionResult EuroCupDetails(int id)
+        public async Task<IActionResult> EuroCupDetails(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var matches = db.Matches.GetByTournament(id);
@@ -87,7 +123,7 @@ namespace MySoccerWorld.Controllers
                     Matches = matches.ToList(),
                     Goals = db.PlayerTeams.GoalScorers(id),
                     Asists = db.PlayerTeams.Asisters(id),
-                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id),
                     Groups = _serv.Group8(tournament)
                 };
                 return View(tournamentView);
@@ -97,11 +133,11 @@ namespace MySoccerWorld.Controllers
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
                 Matches = matches.ToList(),
-                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+                BestPlayer = await db.BestPlayers.GetByTournamentAsync(id) 
             };
             return View(emptyTournamnet);
         }
-        public IActionResult EuroCupKnockOut(int id)
+        public async Task<IActionResult> EuroCupKnockOut(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var matches = db.Matches.GetByTournament(id);
@@ -112,11 +148,11 @@ namespace MySoccerWorld.Controllers
                 Matches = matches.ToList(),
                 Goals = db.PlayerTeams.GoalScorers(id),
                 Asists = db.PlayerTeams.Asisters(id),
-                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+                BestPlayer = await db.BestPlayers.GetByTournamentAsync(id) 
             };
             return View(tournamentView);
         }
-        public IActionResult NationalDetails(int id)
+        public async Task<IActionResult> NationalDetails(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var matches = db.Matches.GetByTournament(id);
@@ -129,7 +165,7 @@ namespace MySoccerWorld.Controllers
                     Matches = matches.ToList(),
                     Goals = db.PlayerTeams.GoalScorers(id),
                     Asists = db.PlayerTeams.Asisters(id),
-                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id),
                     Groups = _serv.Group2(tournament)
                 };
                 return View(tournamentView);
@@ -139,11 +175,11 @@ namespace MySoccerWorld.Controllers
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
                 Matches = matches.ToList(),
-                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+                BestPlayer = await db.BestPlayers.GetByTournamentAsync(id)
             };
             return View(emptyTournamnet);
         }
-        public IActionResult NationalEuro(int id)
+        public async Task<IActionResult> NationalEuro(int id)
         {
             var tournament = db.Tournaments.Details(id);
             var matches = db.Matches.GetByTournament(id);
@@ -156,7 +192,7 @@ namespace MySoccerWorld.Controllers
                     Matches = matches.ToList(),
                     Goals = db.PlayerTeams.GoalScorers(id),
                     Asists = db.PlayerTeams.Asisters(id),
-                    BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
+                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id),
                     Groups = _serv.EuroGroup(tournament)
                 };
                 return View(tournamentView);
@@ -166,7 +202,7 @@ namespace MySoccerWorld.Controllers
                 Tournament = tournament,
                 Teams = tournament.Teams.ToList(),
                 Matches = matches.ToList(),
-                BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
+                BestPlayer = await db.BestPlayers.GetByTournamentAsync(id)
             };
             return View(emptyTournamnet);
         }
@@ -261,8 +297,9 @@ namespace MySoccerWorld.Controllers
         // Matches
         public IActionResult Matches(int id)
         {
-            var matches =  db.Matches.GetByTournament(id);
-            return View(matches);
+            var tournament =  db.Tournaments.Details(id);
+            ViewBag.Matches = db.Matches.GetByTournament(id).OrderBy(m => m.Round);
+            return View(tournament);
         }
         // GoalScorers
         public IActionResult GoalScorers(int id)

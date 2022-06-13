@@ -123,6 +123,14 @@
                         </form>
                     </div>
                 }
+                <div>
+                    <h5> CREATE YOUR SHEDULLE </h5>
+                    <form asp-action="ShedulleQualification" method="get">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="number" name="teamscount" />
+                        <input type="submit" value="SEND" />
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-4 mainrow">

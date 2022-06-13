@@ -8269,23 +8269,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
       "projectName": "MySoccerWorld",
-      "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
-      "packagesPath": "C:\\Users\\GevorgGrigoryan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld\\MySoccerWorld.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\GevorgGrigoryan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8299,20 +8300,20 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj": {
-              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj"
+            "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.BLL\\MySoccerWorld.BLL.csproj"
             },
-            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj": {
-              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj"
+            "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Data\\MySoccerWorld.Data.csproj"
             },
-            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj": {
-              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj"
+            "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Interfaces\\MySoccerWorld.Interfaces.csproj"
             },
-            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj": {
-              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj"
+            "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Model\\MySoccerWorld.Model.csproj"
             },
-            "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj": {
-              "projectPath": "C:\\Users\\GevorgGrigoryan\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj"
+            "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\Projects\\MySoccerWorld.Services\\MySoccerWorld.Services.csproj"
             }
           }
         }
@@ -8382,12 +8383,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.14, 5.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -8396,7 +8391,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

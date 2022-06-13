@@ -60,8 +60,8 @@ namespace MySoccerWorld.Controllers
                 var matchView = new MatchViewModel()
                 {
                     Match = match,
-                    HomePlayers = db.Players.ClubPlayers(match.HomeTeam),
-                    AwayPlayers = db.Players.ClubPlayers(match.AwayTeam)
+                    HomePlayers = db.Players.NationalPlayers(match.HomeTeam),
+                    AwayPlayers = db.Players.NationalPlayers(match.AwayTeam)
                 };
                 return View(matchView);
             }
@@ -70,8 +70,8 @@ namespace MySoccerWorld.Controllers
                 var matchView = new MatchViewModel()
                 {
                     Match = match,
-                    HomePlayers = db.Players.NationalPlayers(match.HomeTeam),
-                    AwayPlayers = db.Players.NationalPlayers(match.AwayTeam)
+                    HomePlayers = db.Players.ClubPlayers(match.HomeTeam),
+                    AwayPlayers = db.Players.ClubPlayers(match.AwayTeam)
                 };
                 return View(matchView);
             }
@@ -82,7 +82,7 @@ namespace MySoccerWorld.Controllers
         {
             db.Matches.Update(match);
             db.Save();
-            var tournament = db.Tournaments.Get(id);
+            var tournament = db.Tournaments.Get(match.TournamentId);
             var link = "";
             if (tournament.TournamentType == TournamentType.Regular)
             {
@@ -111,9 +111,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction(link, "Tournaments", new { id = match.Tournament.Id });
         }
         [HttpPost]
-        public IActionResult GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)
+        public async Task<IActionResult> GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)
         {
-            db.Matches.AddGoal(goal);
+            await db.Matches.AddGoal(goal);
             db.Save();
             return RedirectToAction("EditScore", "Matches", new { id = goal.MatchId });
         }
