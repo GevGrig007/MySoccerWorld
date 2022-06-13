@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld", "MySoccerWorld.csproj", "{ACD875E1-6E01-4242-BE0B-E9202B93563D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.BLL", "E:\Desctop\Projects\MySoccerWorld.BLL\MySoccerWorld.BLL.csproj", "{008841B4-2266-4307-92BD-C5C3C09C4156}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Data", "E:\Desctop\Projects\MySoccerWorld.Data\MySoccerWorld.Data.csproj", "{33C52CAF-1A1C-4CD8-AB5E-AE0CB2F5814C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Interfaces", "E:\Desctop\Projects\MySoccerWorld.Interfaces\MySoccerWorld.Interfaces.csproj", "{C049BE1E-191C-460D-9EC8-DC9F091AA00A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Model", "E:\Desctop\Projects\MySoccerWorld.Model\MySoccerWorld.Model.csproj", "{25CDBEC9-51C5-45BC-9A10-F4CF1AF269FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Services", "E:\Desctop\Projects\MySoccerWorld.Services\MySoccerWorld.Services.csproj", "{28E266AF-C2CA-4B83-A2D6-E61885602D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,26 @@ Global
 		{ACD875E1-6E01-4242-BE0B-E9202B93563D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACD875E1-6E01-4242-BE0B-E9202B93563D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACD875E1-6E01-4242-BE0B-E9202B93563D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{008841B4-2266-4307-92BD-C5C3C09C4156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008841B4-2266-4307-92BD-C5C3C09C4156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008841B4-2266-4307-92BD-C5C3C09C4156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008841B4-2266-4307-92BD-C5C3C09C4156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C52CAF-1A1C-4CD8-AB5E-AE0CB2F5814C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C52CAF-1A1C-4CD8-AB5E-AE0CB2F5814C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C52CAF-1A1C-4CD8-AB5E-AE0CB2F5814C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C52CAF-1A1C-4CD8-AB5E-AE0CB2F5814C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C049BE1E-191C-460D-9EC8-DC9F091AA00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C049BE1E-191C-460D-9EC8-DC9F091AA00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C049BE1E-191C-460D-9EC8-DC9F091AA00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C049BE1E-191C-460D-9EC8-DC9F091AA00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25CDBEC9-51C5-45BC-9A10-F4CF1AF269FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25CDBEC9-51C5-45BC-9A10-F4CF1AF269FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25CDBEC9-51C5-45BC-9A10-F4CF1AF269FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25CDBEC9-51C5-45BC-9A10-F4CF1AF269FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E266AF-C2CA-4B83-A2D6-E61885602D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E266AF-C2CA-4B83-A2D6-E61885602D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E266AF-C2CA-4B83-A2D6-E61885602D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E266AF-C2CA-4B83-A2D6-E61885602D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
