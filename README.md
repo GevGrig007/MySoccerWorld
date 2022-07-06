@@ -1,5 +1,5 @@
 <div>
-    <p align="center">
+    <p>
        With a big game, the application can be included in the game itself or consider an application to collect your own statistics of football fans what can this app        do : 
        - basis for a database of clubs and national teams, players and coaches 
        - create tournaments for both clubs and national teams , division into leagues     
